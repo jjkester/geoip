@@ -1,0 +1,4 @@
+Django >= 1.8 , < 1.9
+hashids
+psycopg2
+requests
