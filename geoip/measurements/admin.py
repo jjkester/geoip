@@ -4,7 +4,7 @@ Django Admin configuration for the GeoIP results app.
 from django.contrib import admin
 from django.contrib.gis.admin import OSMGeoAdmin
 from django.utils.translation import ugettext_lazy as _
-from geoip.results.models import Dataset, Measurement
+from geoip.measurements.models import Dataset, Measurement
 
 
 @admin.register(Dataset)
