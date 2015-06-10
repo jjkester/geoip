@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.getenv('GEOIP_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['127.0.0.1']
 
@@ -41,8 +41,9 @@ INSTALLED_APPS = (
 
     'geoip.databases',
     'geoip.nodes',
-    'geoip.results',
+    'geoip.measurements',
     'geoip.scrapers',
+    'geoip.statistics',
 )
 
 MIDDLEWARE_CLASSES = (
