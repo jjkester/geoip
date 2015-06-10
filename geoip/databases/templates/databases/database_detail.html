@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block page_title %}{% trans "Database" %} {{ database.name }}{% endblock %}
+{% block content %}
+  <section class="container">
+    <nav class="toolbar">
+      <div class="btn-group">
+        <a href="{% url 'databases:database_list' %}" class="btn btn-default"><i class="glyphicon glyphicon-menu-left"></i> {% trans "Back to overview" %}</a>
+      </div>
+      {% if user.is_staff %}
+        <div class="btn-group">
+          <button class="btn btn-warning disabled"><i class="glyphicon glyphicon-flash"></i> {% trans "Admin" %}</button>
+          <a href="{% url 'admin:databases_database_change' database.pk %}" class="btn btn-warning"><i class="glyphicon glyphicon-pencil"></i> {% trans "Edit" %} {% trans "database" %}</a>
+          <a href="{% url 'admin:databases_database_delete' database.pk %}" class="btn btn-warning"><i class="glyphicon glyphicon-trash"></i> {% trans "Delete" %} {% trans "database" %}</a>
+        </div>
+      {% endif %}
+    </nav>
+
+    <header class="page-header">
+      <h1>
+        {% trans "Database" %}
+        <small>{{ database.name }}</small>
+      </h1>
+    </header>
+
+    <div class="row">
+      <div class="col-sm-6 col-md-3">
+        <h3>{% trans "Details" %}</h3>
+        <dl>
+          <dt>{% trans "ID" %}</dt>
+          <dd>{{ database.hashid }}</dd>
+        </dl>
+      </div>
+      <div class="col-sm-6 col-md-3">
+        <h3>{% trans "Version" %}</h3>
+        <dl>
+          <dt>{% trans "Version" %}</dt>
+          <dd>{{ database.version }}</dd>
+        </dl>
+      </div>
+      <div class="col-md-6">
+        <h3>{% trans "Source" %}</h3>
+        <dl>
+          <dt>{{ database.name }}</dt>
+          <dd>{{ database.url|urlize }}</dd>
+        </dl>
+      </div>
+    </div>
+
+    <hr>
+
+    <h2>{% trans "Measurements" %}</h2>
+
+    {% for dataset in datasets %}
+    {% empty %}
+      <div class="alert alert-info">
+        <h4><i class="glyphicon glyphicon-info-sign"></i> {% blocktrans %}This database has not yet participated in any measurements{% endblocktrans %}</h4>
+        <p>{% blocktrans %}This usually means that there has been no new measurement since the database was added. The database will be tested in the upcoming measurements.{% endblocktrans %}</p>
+      </div>
+    {% endfor %}
+  </section>
+{% endblock %}

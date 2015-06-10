@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block page_title %}{% trans "Geolocation databases" %}{% endblock %}
+{% block jumbotron %}
+  <div class="container">
+    <h1>{% trans "Geolocation databases" %}</h1>
+    <p>{% blocktrans %}Approximate geographic locations for IP addresses{% endblocktrans %}</p>
+  </div>
+{% endblock %}
+{% block content %}
+  <section class="container">
+    <nav class="toolbar">
+      <div class="btn-group">
+      </div>
+      {% if user.is_staff %}
+        <div class="btn-group">
+          <button class="btn btn-warning disabled"><i class="glyphicon glyphicon-flash"></i> {% trans "Admin" %}</button>
+          <a href="{% url 'admin:databases_database_changelist' %}" class="btn btn-warning"><i class="glyphicon glyphicon-list"></i> {% trans "All" %} {% trans "databases" %}</a>
+          <a href="{% url 'admin:databases_database_add' %}" class="btn btn-warning"><i class="glyphicon glyphicon-plus"></i> {% trans "Add" %} {% trans "database" %}</a>
+        </div>
+      {% endif %}
+    </nav>
+
+    <header class="page-header">
+      <h1>{% trans "Tested databases" %}</h1>
+    </header>
+    <p>{% blocktrans %}The measurements are carried out using a number of geolocation databases.{% endblocktrans %}</p>
+
+    <hr>
+
+    <h2>{% trans "Currently available" %}</h2>
+    <p>{% blocktrans %}The following databases are currently used in tests:{% endblocktrans %}</p>
+    <div class="row">
+      {% for database in databases.active %}
+        <div class="col-md-6">
+          <div class="panel panel-default">
+            <div class="panel-body">
+              <h4>{{ database.name }}</h4>
+              <p><small>{% trans "Version" %}:</small> {{ database.version }}</p>
+              <p>{{ database.url|urlize|default:'' }}</p>
+              <p class="text-right">
+                <a href="{% url 'databases:database_detail' hashid=database.hashid %}" class="btn btn-sm btn-default">{% trans "Details &amp; test results" %}</a>
+              </p>
+            </div>
+          </div>
+        </div>
+      {% empty %}
+        <div class="col-xs-12">
+          <div class="alert alert-info">
+            <h4><i class="glyphicon glyphicon-info-sign"></i> {% blocktrans %}No databases available{% endblocktrans %}</h4>
+            <p>{% blocktrans %}At this moment there are no databases available for testing.{% endblocktrans %}</p>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+
+    {% if databases.inactive.exists %}
+      <hr>
+
+      <h2>{% trans "Archived databases" %}</h2>
+      <div class="row">
+        {% for database in databases.active %}
+          <div class="col-md-6">
+            <h3>{{ database.name }}</h3>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  </section>
+{% endblock %}
