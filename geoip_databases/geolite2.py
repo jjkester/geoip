@@ -8,6 +8,7 @@ Requires the C API (https://github.com/maxmind/libmaxminddb) to be installed and
 """
 import ipaddress
 from django.contrib.gis.geos import Point
+from django.utils.datetime_safe import datetime
 from geoip2 import database
 from geoip2.errors import AddressNotFoundError
 from geoip_databases.interfaces import GeoIPInterface
@@ -31,11 +32,17 @@ class GeoLite2(GeoIPInterface):
         self._reader.close()
 
     def get_version(self):
-        return str(self._reader.metadata().build_epoch)
+        return datetime.fromtimestamp(self._reader.metadata().build_epoch).strftime('%Y-%m-%d')
 
     def query_v4(self, address: ipaddress.IPv4Address) -> Point:
+        return self._query(str(address))
+
+    def query_v6(self, address: ipaddress.IPv6Address) -> Point:
+        return self._query(str(address))
+
+    def _query(self, address: str) -> Point:
         try:
-            response = self._reader.city(str(address))
+            response = self._reader.city(address)
             return Point(
                 response.location.latitude,
                 response.location.longitude,
@@ -43,9 +50,6 @@ class GeoLite2(GeoIPInterface):
             )
         except AddressNotFoundError:
             return None
-
-    def query_v6(self, address: ipaddress.IPv6Address) -> Point:
-        pass
 
     def _get_reader(self):
         return database.Reader(self._get_file('geolite2/GeoLite2-City.mmdb'))
