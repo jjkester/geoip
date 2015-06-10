@@ -33,7 +33,19 @@
 {% endblock %}
 {% block content %}
   <section class="container">
-    <a href="{% url 'nodes:node_list' %}" class="btn btn-default"><i class="glyphicon glyphicon-menu-left"></i> Back to list</a>
+    <nav class="toolbar">
+      <div class="btn-group">
+        <a href="{% url 'nodes:node_list' %}" class="btn btn-default"><i class="glyphicon glyphicon-menu-left"></i> {% trans "Back to list" %}</a>
+      </div>
+      {% if user.is_staff %}
+        <div class="btn-group">
+          <button class="btn btn-warning disabled"><i class="glyphicon glyphicon-flash"></i> {% trans "Admin" %}</button>
+          <a href="{% url 'admin:nodes_node_change' node.pk %}" class="btn btn-warning"><i class="glyphicon glyphicon-pencil"></i> {% trans "Edit" %} {% trans "node" %}</a>
+          <a href="{% url 'admin:nodes_node_delete' node.pk %}" class="btn btn-warning"><i class="glyphicon glyphicon-trash"></i> {% trans "Delete" %} {% trans "node" %}</a>
+        </div>
+      {% endif %}
+    </nav>
+
     <header class="page-header">
       <h1>
         {% trans "Node" %}
@@ -43,34 +55,34 @@
 
     <div class="row">
       <div class="col-xs-6 col-md-3">
-        <h3>Details</h3>
+        <h3>{% trans "Details" %}</h3>
         <dl>
-          <dt>ID</dt>
+          <dt>{% trans "ID" %}</dt>
           <dd>{{ node.hashid }}</dd>
-          <dt>Domain name</dt>
+          <dt>{% trans "Domain name" %}</dt>
           <dd>{{ node.dns_name|default:'&mdash;' }}</dd>
         </dl>
       </div>
       <div class="col-xs-6 col-md-3">
-        <h3>Location</h3>
+        <h3>{% trans "Location" %}</h3>
         <dl>
-          <dt>Latitude</dt>
+          <dt>{% trans "Latitude" %}</dt>
           <dd>{{ node.location.0 }}</dd>
-          <dt>Longitude</dt>
+          <dt>{% trans "Longitude" %}</dt>
           <dd>{{ node.location.1 }}</dd>
         </dl>
       </div>
       <div class="col-sm-6 col-md-3">
-        <h3>IP addresses</h3>
+        <h3>{% trans "IP addresses" %}</h3>
         <dl>
-          <dt>IPv4 address</dt>
+          <dt>{% trans "IPv4 address" %}</dt>
           <dd>{{ node.ipv4|default:'&mdash;' }}</dd>
-          <dt>IPv6 address</dt>
+          <dt>{% trans "IPv6 address" %}</dt>
           <dd>{{ node.ipv6|default:'&mdash;' }}</dd>
         </dl>
       </div>
       <div class="col-sm-6 col-md-3">
-        <h3>Source</h3>
+        <h3>{% trans "Source" %}</h3>
         <dl>
           <dt>{{ node.source.name }}</dt>
           <dd>{{ node.source.url|urlize }}</dd>
@@ -80,13 +92,13 @@
 
     <hr>
 
-    <h2>Measurements</h2>
+    <h2>{% trans "Measurements" %}</h2>
 
     {% for dataset in datasets %}
     {% empty %}
       <div class="alert alert-info">
-        <h4><i class="glyphicon glyphicon-info-sign"></i> This node has not yet participated in any measurements</h4>
-        <p>This usually means that there has been no new measurement since the node was added. The IP addresses of the node will be tested in the upcomping measurements.</p>
+        <h4><i class="glyphicon glyphicon-info-sign"></i> {% blocktrans %}This node has not yet participated in any measurements{% endblocktrans %}</h4>
+        <p>{% blocktrans %}This usually means that there has been no new measurement since the node was added. The IP addresses of the node will be tested in the upcoming measurements.{% endblocktrans %}</p>
       </div>
     {% endfor %}
   </section>

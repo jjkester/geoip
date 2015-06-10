@@ -1,45 +1,58 @@
 {% extends 'base.html' %}
 {% load i18n %}
-{% block page_title %}Ground truth nodes{% endblock %}
+{% block page_title %}{% trans "Ground truth nodes" %}{% endblock %}
 {% block jumbotron %}
   <div class="container">
     <h1>
       {% trans "Ground truth nodes" %}
     </h1>
-    <p>{% blocktrans %}A solid set of information to validate database results against{% endblocktrans %}</p>
+    <p>{% blocktrans %}A solid set of information to compare database query results against{% endblocktrans %}</p>
   </div>
 {% endblock %}
 {% block content %}
   <section class="container">
-    <a href="{% url 'nodes:node_list' %}" class="btn btn-default"><i class="glyphicon glyphicon-list"></i> Browse all nodes</a>
-    <a href="" class="btn btn-default"><i class="glyphicon glyphicon-globe"></i> Show coverage on a map</a>
+    <nav class="toolbar">
+      <div class="btn-group">
+        <a href="{% url 'nodes:node_list' %}" class="btn btn-default"><i class="glyphicon glyphicon-list"></i> {% trans "Browse all nodes" %}</a>
+      </div>
+      <div class="btn-group">
+        <a href="" class="btn btn-default"><i class="glyphicon glyphicon-globe"></i> {% trans "Global coverage" %}</a>
+      </div>
+      {% if user.is_staff %}
+        <div class="btn-group">
+          <button class="btn btn-warning disabled"><i class="glyphicon glyphicon-flash"></i> {% trans "Admin" %}</button>
+          <a href="{% url 'admin:nodes_datasource_changelist' %}" class="btn btn-warning"><i class="glyphicon glyphicon-list"></i> {% trans "All" %} {% trans "sources" %}</a>
+          <a href="{% url 'admin:nodes_datasource_add' %}" class="btn btn-warning"><i class="glyphicon glyphicon-plus"></i> {% trans "Add" %} {% trans "source" %}</a>
+        </div>
+      {% endif %}
+    </nav>
+
     <div class="page-header">
       <h1>{% trans "Nodes" %}</h1>
     </div>
 
-    <p>The measurements performed by this application require a set of test nodes. A node is a physical computer system with a public IP address (eiter IPv4, IPv6 or both) and a known physical location. This location is used as a ground truth when looking up the node's IP address in IP geolocation databases. This way it is possible to calculate the accuracy of a database for a given node.</p>
-    <p>The measurements do not require access to the node, only the information about the node is sufficient. However, the information has to be accurate for the research method to work.</p>
-    <p>For more information about the research method see the <a href="">about</a> page.</p>
+    <p>{% blocktrans %}The measurements performed by this application require a set of test nodes. A node is a physical computer system with a public IP address (either IPv4, IPv6 or both) and a known physical location. This location is used as a ground truth when looking up the node's IP address in IP geolocation databases. This way it is possible to calculate the accuracy of a database for a given node.{% endblocktrans %}</p>
+    <p>{% blocktrans %}The measurements do not require access to the node, only the information about the node is sufficient. However, the information has to be accurate for the research method to work.{% endblocktrans %}</p>
 
     <hr>
 
-    <h2>Sources</h2>
-    <p>The test node data is a compilation of data from a number of trustworthy sources which can be found below.</p>
+    <h2>{% trans "Sources" %}</h2>
+    <p>{% blocktrans %}The test node data is a compilation of data from a number of trustworthy sources which can be found below.{% endblocktrans %}</p>
 
     <div class="row">
       {% for source in sources %}
-        <div class="col-xs-6 col-sm-4 col-md-3">
+        <div class="col-sm-6 col-md-4">
           <div class="panel panel-default">
             <div class="panel-body">
               <h4>{{ source.name }}</h4>
               <p>{{ source.url|urlize }}</p>
-              <p><strong>{{ source.nodes.count }} nodes</strong></p>
+              <p><strong>{{ source.nodes.count }} {% trans "nodes" %}</strong></p>
             </div>
           </div>
         </div>
       {% endfor %}
     </div>
 
-    <p>Do you think you have an interesting set of nodes to use in the measurements?</p>
+    <p>{% blocktrans %}Do you think you have an interesting set of nodes to use as ground truth? Please get in touch to discuss the possibilities.{% endblocktrans %}</p>
   </section>
 {% endblock %}
