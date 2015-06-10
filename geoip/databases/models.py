@@ -50,3 +50,13 @@ class Database(models.Model):
     @cached_property
     def hashid(self):
         return self.hashids.encode(self.id)
+
+    def get_interface(self):
+        """
+        :return: An instance of the interface for this Database or ``None`` if it is not available.
+        """
+        try:
+            module = __import__('geoip_databases.%s' % self.codename, fromlist=['geoip_databases'])
+            return module.interface()
+        except (ImportError, AttributeError):
+            return None

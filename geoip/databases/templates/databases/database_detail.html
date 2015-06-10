@@ -47,6 +47,10 @@
       </div>
     </div>
 
+    {% if database.notes %}
+      <p><strong>{% trans "Notes" %}:</strong> {{ database.notes|safe }}</p>
+    {% endif %}
+
     <hr>
 
     <h2>{% trans "Measurements" %}</h2>

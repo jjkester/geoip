@@ -2,3 +2,6 @@ Django >= 1.8 , < 1.9
 hashids
 psycopg2
 requests
+
+# GeoIP database requirements
+-r geoip-databases/requirements.txt
