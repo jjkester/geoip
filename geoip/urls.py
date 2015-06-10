@@ -17,6 +17,15 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 
+from geoip.views import HomepageView
+
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
+
+    url(r'^databases/', include('geoip.databases.urls', namespace='databases')),
+    url(r'^nodes/', include('geoip.nodes.urls', namespace='nodes')),
+    url(r'^measurements/', include('geoip.measurements.urls', namespace='measurements')),
+    url(r'^statistics/', include('geoip.statistics.urls', namespace='statistics')),
+
+    url(r'^$', HomepageView.as_view(), name='home'),
 ]

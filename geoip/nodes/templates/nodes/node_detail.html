@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block page_title %}{% blocktrans %}Node {{ node }}{% endblocktrans %}{% endblock %}
+{% block jumbotron %}
+  <div id="map" style="height: 300px; margin: -48px 0;"></div>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $.getScript("http://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js", function(data, status, jqxhr) {
+        var map = L.map("map").setView(center=[{{ node.location.0 }}, {{ node.location.1 }}], zoom=11, crs=L.CRS.EPSG4326);
+
+        // Disable dragging and zooming
+        map.dragging.disable();
+        map.touchZoom.disable();
+        map.doubleClickZoom.disable();
+        map.scrollWheelZoom.disable();
+
+        // Disable tap handler, if present.
+        if (map.tap) map.tap.disable();
+
+        // Add openstreetmap
+        L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          maxZoom: 15,
+          subdomains: ['a', 'b', 'c'],
+          attribution: 'Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
+        }).addTo(map);
+        var marker = L.circleMarker([{{ node.location.0 }}, {{ node.location.1 }}], {
+          color: '#2c3e50',
+          clickable: false
+        }).addTo(map);
+      });
+    });
+  </script>
+{% endblock %}
+{% block content %}
+  <section class="container">
+    <a href="{% url 'nodes:node_list' %}" class="btn btn-default"><i class="glyphicon glyphicon-menu-left"></i> Back to list</a>
+    <header class="page-header">
+      <h1>
+        {% trans "Node" %}
+        <small>{{ node }}</small>
+      </h1>
+    </header>
+
+    <div class="row">
+      <div class="col-xs-6 col-md-3">
+        <h3>Details</h3>
+        <dl>
+          <dt>ID</dt>
+          <dd>{{ node.hashid }}</dd>
+          <dt>Domain name</dt>
+          <dd>{{ node.dns_name|default:'&mdash;' }}</dd>
+        </dl>
+      </div>
+      <div class="col-xs-6 col-md-3">
+        <h3>Location</h3>
+        <dl>
+          <dt>Latitude</dt>
+          <dd>{{ node.location.0 }}</dd>
+          <dt>Longitude</dt>
+          <dd>{{ node.location.1 }}</dd>
+        </dl>
+      </div>
+      <div class="col-sm-6 col-md-3">
+        <h3>IP addresses</h3>
+        <dl>
+          <dt>IPv4 address</dt>
+          <dd>{{ node.ipv4|default:'&mdash;' }}</dd>
+          <dt>IPv6 address</dt>
+          <dd>{{ node.ipv6|default:'&mdash;' }}</dd>
+        </dl>
+      </div>
+      <div class="col-sm-6 col-md-3">
+        <h3>Source</h3>
+        <dl>
+          <dt>{{ node.source.name }}</dt>
+          <dd>{{ node.source.url|urlize }}</dd>
+        </dl>
+      </div>
+    </div>
+
+    <hr>
+
+    <h2>Measurements</h2>
+
+    {% for dataset in datasets %}
+    {% empty %}
+      <div class="alert alert-info">
+        <h4><i class="glyphicon glyphicon-info-sign"></i> This node has not yet participated in any measurements</h4>
+        <p>This usually means that there has been no new measurement since the node was added. The IP addresses of the node will be tested in the upcomping measurements.</p>
+      </div>
+    {% endfor %}
+  </section>
+{% endblock %}

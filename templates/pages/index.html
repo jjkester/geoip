@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block jumbotron %}
+  <div class="container">
+    <h1><small>{% blocktrans %}Insight into{% endblocktrans %}</small><br>{% blocktrans %}IP geolocation database accuracy{% endblocktrans %}</h1>
+    <hr>
+    <p>{% blocktrans %}Measuring IP geolocation database accuracy using real-world testing data from accredited sources{% endblocktrans %}</p>
+  </div>
+{% endblock %}
+{% block content %}
+  <div class="container text-center">
+    <div class="row">
+      <div class="col-sm-6 col-md-3">
+        <div class="panel panel-primary text-center">
+          <div class="panel-body">
+            <p class="h2">1.251</p>
+          </div>
+          <div class="panel-footer">Test nodes</div>
+        </div>
+      </div>
+      <div class="col-sm-6 col-md-3">
+        <div class="panel panel-primary text-center">
+          <div class="panel-body">
+            <p class="h2">8</p>
+          </div>
+          <div class="panel-footer">Historical measurements</div>
+        </div>
+      </div>
+      <div class="col-sm-6 col-md-3">
+        <div class="panel panel-primary text-center">
+          <div class="panel-body">
+            <p class="h2">91%</p>
+          </div>
+          <div class="panel-footer">Best score</div>
+        </div>
+      </div>
+      <div class="col-sm-6 col-md-3">
+        <div class="panel panel-primary text-center">
+          <div class="panel-body">
+            <p class="h2">90 days</p>
+          </div>
+          <div class="panel-footer">Last measurement</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="container">
+    <h1>Based on scientific research</h1>
+    <p>The author of this site, <strong>Jan-Jelle Kester</strong>, wrote a paper.</p>
+  </div>
+{% endblock %}

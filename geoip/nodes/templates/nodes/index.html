@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block page_title %}Ground truth nodes{% endblock %}
+{% block jumbotron %}
+  <div class="container">
+    <h1>
+      {% trans "Ground truth nodes" %}
+    </h1>
+    <p>{% blocktrans %}A solid set of information to validate database results against{% endblocktrans %}</p>
+  </div>
+{% endblock %}
+{% block content %}
+  <section class="container">
+    <a href="{% url 'nodes:node_list' %}" class="btn btn-default"><i class="glyphicon glyphicon-list"></i> Browse all nodes</a>
+    <a href="" class="btn btn-default"><i class="glyphicon glyphicon-globe"></i> Show coverage on a map</a>
+    <div class="page-header">
+      <h1>{% trans "Nodes" %}</h1>
+    </div>
+
+    <p>The measurements performed by this application require a set of test nodes. A node is a physical computer system with a public IP address (eiter IPv4, IPv6 or both) and a known physical location. This location is used as a ground truth when looking up the node's IP address in IP geolocation databases. This way it is possible to calculate the accuracy of a database for a given node.</p>
+    <p>The measurements do not require access to the node, only the information about the node is sufficient. However, the information has to be accurate for the research method to work.</p>
+    <p>For more information about the research method see the <a href="">about</a> page.</p>
+
+    <hr>
+
+    <h2>Sources</h2>
+    <p>The test node data is a compilation of data from a number of trustworthy sources which can be found below.</p>
+
+    <div class="row">
+      {% for source in sources %}
+        <div class="col-xs-6 col-sm-4 col-md-3">
+          <div class="panel panel-default">
+            <div class="panel-body">
+              <h4>{{ source.name }}</h4>
+              <p>{{ source.url|urlize }}</p>
+              <p><strong>{{ source.nodes.count }} nodes</strong></p>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+
+    <p>Do you think you have an interesting set of nodes to use in the measurements?</p>
+  </section>
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block page_title %}{% blocktrans %}List of nodes{% endblocktrans %}{% endblock %}
+{% block content %}
+  <section class="container">
+    <a href="{% url 'nodes:index' %}" class="btn btn-default"><i class="glyphicon glyphicon-menu-left"></i> Back to overview</a>
+    <header class="page-header">
+      <h1>
+        {% trans "List of nodes" %}
+      </h1>
+    </header>
+
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>&nbsp;</th>
+          <th>{% trans "IP addresses" %}</th>
+          <th>{% trans "Source" %}</th>
+          <th class="text-right"></th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for node in nodes %}
+        <tr>
+          <td>{{ node.name }}</td>
+          <td>
+            <small>IPv4:</small> {{ node.ipv4|default:'&mdash;' }}<br>
+            <small>IPv6:</small> {{ node.ipv6|default:'&mdash;' }}
+          </td>
+          <td>
+            <a href="{{ node.source.url }}">{{ node.source.name }}</a>
+          </td>
+          <td class="text-right" style="vertical-align: middle;">
+            <a href="{% url 'nodes:node_detail' hashid=node.hashid %}" class="btn btn-default btn-sm">{% trans "Details" %}</a>
+          </td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+
+    {% include 'elements/pagination.html' %}
+  </section>
+{% endblock %}

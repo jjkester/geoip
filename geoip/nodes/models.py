@@ -2,8 +2,18 @@
 Data models for investigated nodes in the GeoIP project.
 """
 from django.contrib.gis.db import models
+from django.db.models import Q
+from django.utils.functional import cached_property
 from django.utils.translation import ugettext_lazy as _
 from hashids import Hashids
+
+
+class NodeManager(models.GeoManager):
+    """
+    Manager for the Node model.
+    """
+    def useable(self):
+        return self.get_queryset().filter(is_active=True).exclude(location=None).exclude(Q(ipv4=None) | Q(ipv6=None))
 
 
 class Node(models.Model):
@@ -12,7 +22,7 @@ class Node(models.Model):
     """
     name = models.CharField(max_length=255, verbose_name=_("name"))
     dns_name = models.CharField(blank=True, max_length=255, verbose_name=_("domain name"))
-    source = models.ForeignKey('DataSource', on_delete=models.PROTECT, related_name='nodes+', verbose_name=_("source"))
+    source = models.ForeignKey('DataSource', on_delete=models.PROTECT, related_name='nodes', verbose_name=_("source"))
     notes = models.TextField(blank=True, verbose_name=_("notes"))
     location = models.PointField(blank=True, null=True, geography=True, verbose_name=_("known location"))
     ipv4 = models.GenericIPAddressField(blank=True, null=True, protocol='ipv4', verbose_name=_("IPv4 address"))
@@ -22,7 +32,7 @@ class Node(models.Model):
     is_active = models.BooleanField(default=True, verbose_name=_("is active"))
 
     # Manager
-    objects = models.GeoManager()
+    objects = NodeManager()
 
     # HashIDs
     hashids = Hashids(salt='N0d3', min_length=5)
@@ -33,6 +43,10 @@ class Node(models.Model):
 
     def __str__(self):
         return "{name:s}".format(name=self.name)
+
+    @cached_property
+    def hashid(self):
+        return self.hashids.encode(self.id)
 
 
 class DataSource(models.Model):
