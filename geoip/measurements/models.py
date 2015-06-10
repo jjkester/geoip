@@ -2,7 +2,6 @@
 Data models for the results of the measurements of the GeoIP application.
 """
 from django.contrib.gis.db import models
-from django.utils.functional import cached_property
 from django.utils.translation import ugettext_lazy as _
 from hashids import Hashids
 

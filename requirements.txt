@@ -1,4 +1,5 @@
 Django >= 1.8 , < 1.9
+django-bootstrap-form
 hashids
 psycopg2
 requests

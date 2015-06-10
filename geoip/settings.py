@@ -39,6 +39,8 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.gis',
 
+    'bootstrapform',
+
     'geoip.databases',
     'geoip.nodes',
     'geoip.measurements',

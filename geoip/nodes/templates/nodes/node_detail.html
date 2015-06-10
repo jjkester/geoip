@@ -3,33 +3,7 @@
 {% block page_title %}{% blocktrans %}Node {{ node }}{% endblocktrans %}{% endblock %}
 {% block jumbotron %}
   <div id="map" style="height: 300px; margin: -48px 0;"></div>
-  <script type="text/javascript">
-    $(document).ready(function() {
-      $.getScript("http://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js", function(data, status, jqxhr) {
-        var map = L.map("map").setView(center=[{{ node.location.0 }}, {{ node.location.1 }}], zoom=11, crs=L.CRS.EPSG4326);
-
-        // Disable dragging and zooming
-        map.dragging.disable();
-        map.touchZoom.disable();
-        map.doubleClickZoom.disable();
-        map.scrollWheelZoom.disable();
-
-        // Disable tap handler, if present.
-        if (map.tap) map.tap.disable();
-
-        // Add openstreetmap
-        L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-          maxZoom: 15,
-          subdomains: ['a', 'b', 'c'],
-          attribution: 'Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
-        }).addTo(map);
-        var marker = L.circleMarker([{{ node.location.0 }}, {{ node.location.1 }}], {
-          color: '#2c3e50',
-          clickable: false
-        }).addTo(map);
-      });
-    });
-  </script>
+  {% include 'elements/map.html' with point=node.location %}
 {% endblock %}
 {% block content %}
   <section class="container">

@@ -7,6 +7,9 @@
       <div class="btn-group">
         <a href="{% url 'databases:database_list' %}" class="btn btn-default"><i class="glyphicon glyphicon-menu-left"></i> {% trans "Back to overview" %}</a>
       </div>
+      <div class="btn-group">
+        <a href="{% url 'databases:database_query' hashid=database.hashid %}" class="btn btn-default"><i class="glyphicon glyphicon-console"></i> {% trans "Query database" %}</a>
+      </div>
       {% if user.is_staff %}
         <div class="btn-group">
           <button class="btn btn-warning disabled"><i class="glyphicon glyphicon-flash"></i> {% trans "Admin" %}</button>
@@ -34,7 +37,7 @@
       <div class="col-sm-6 col-md-3">
         <h3>{% trans "Version" %}</h3>
         <dl>
-          <dt>{% trans "Version" %}</dt>
+          <dt>{% trans "Current version" %}</dt>
           <dd>{{ database.version }}</dd>
         </dl>
       </div>

@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load bootstrap %}
+{% block page_title %}{% trans "Query database" %} {{ database.name }}{% if ip_address %} {% trans "with" %} {{ ip_address }}{% endif %}{% endblock %}
+{% block content %}
+  <section class="container">
+    <nav class="toolbar">
+      <div class="btn-group">
+        <a href="{% url 'databases:database_detail' database.hashid %}" class="btn btn-default"><i class="glyphicon glyphicon-menu-left"></i> {% trans "Back to database" %}</a>
+      </div>
+    </nav>
+
+    <header class="page-header">
+      <h1>
+        {% trans "Query database" %}
+        <small>{{ database.name }}</small>
+      </h1>
+    </header>
+
+    <div class="well">
+      <form class="form-horizontal" method="post" action="{% url 'databases:database_query' hashid=database.hashid %}">
+        {% csrf_token %}
+        {{ form|bootstrap_horizontal:'col-sm-3 col-md-2' }}
+        <p class="text-right">
+          <button type="submit" class="btn btn-success">Run query</button>
+        </p>
+      </form>
+    </div>
+
+    {% if ip_address %}
+      <h2>
+        {% trans "Location" %}
+        <small>{{ ip_address }}</small>
+      </h2>
+      {% if location %}
+        <p>The (approximate) location for address <strong>{{ ip_address }}</strong> according to the <strong>{{ database.name }}</strong> database is <strong>({{ location.0 }}, {{ location.1 }})</strong>.</p>
+        <div id="map" style="height: 500px;"></div>
+        {% include 'elements/map.html' with point=location mutable=True %}
+      {% else %}
+        <div class="alert alert-info">
+          <h4><i class="glyphicon glyphicon-info-sign"></i> No location found</h4>
+          <p>The {{ database.name }} database has no location for the IP address {{ ip_address }}</p>
+        </div>
+      {% endif %}
+    {% endif %}
+
+    {% if database.notes %}
+      <p class="text-center text-muted">{{ database.notes|safe }}</p>
+    {% endif %}
+  </section>
+{% endblock %}
