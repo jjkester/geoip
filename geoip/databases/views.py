@@ -4,6 +4,7 @@ Views for the GeoIP databases app.
 from django.core.urlresolvers import reverse_lazy
 from django.http import HttpResponseRedirect
 from django.views.generic import ListView, DetailView, UpdateView
+from geodb import GeoDB
 from geoip.contrib.views import HashidsSingleObjectMixin
 from geoip.databases.forms import IPAddressForm
 from geoip.databases.models import Database
@@ -50,7 +51,7 @@ class DatabaseQueryResultView(HashidsSingleObjectMixin, DetailView):
 
     def get_location(self):
         ip_address = self.kwargs['ip_address']
-        interface = self.object.get_interface()
+        interface = GeoDB.get_interface(self.object.codename)
         location = interface.query(ip_address)
         interface.close()
         return location

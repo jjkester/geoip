@@ -41,6 +41,8 @@ INSTALLED_APPS = (
 
     'bootstrapform',
 
+    'geodb',
+
     'geoip.databases',
     'geoip.nodes',
     'geoip.measurements',

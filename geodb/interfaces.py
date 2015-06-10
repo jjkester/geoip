@@ -69,21 +69,6 @@ class GeoIPInterface(object):
         """
         return ""
 
-    def get_database_obj(self):
-        """
-        :return: The Database instance for this database.
-        """
-        obj, created = Database.objects.update_or_create(
-            codename=self.codename,
-            defaults=dict(
-                name=self.name,
-                version=self.get_version(),
-                url=self.url,
-                notes=self.license,
-            ),
-        )
-        return obj
-
     def _get_storage_root(self):
         """
         :return: The folder containing GeoIP database files.
