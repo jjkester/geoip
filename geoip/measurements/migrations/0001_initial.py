@@ -40,8 +40,7 @@ class Migration(migrations.Migration):
                 ('ipv6_location', django.contrib.gis.db.models.fields.PointField(geography=True, verbose_name='IPv6 location', srid=4326)),
                 ('created', models.DateTimeField(auto_now_add=True, verbose_name='created')),
                 ('database', models.ForeignKey(related_name='measurements', verbose_name='GeoIP database', on_delete=django.db.models.deletion.PROTECT, to='databases.Database')),
-                ('dataset', models.ForeignKey(related_name='measurements', verbose_name='data set', to='geoip'
-                                                                                                       '.measurements.Dataset')),
+                ('dataset', models.ForeignKey(related_name='measurements', verbose_name='data set', to='measurements.Dataset')),
                 ('node', models.ForeignKey(related_name='measurements', verbose_name='node', on_delete=django.db.models.deletion.PROTECT, to='nodes.Node')),
             ],
             options={
