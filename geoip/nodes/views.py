@@ -23,7 +23,7 @@ class NodeListView(ListView):
     """
     Lists active nodes.
     """
-    queryset = Node.objects.useable()
+    queryset = Node.objects.active().usable()
     context_object_name = 'nodes'
     paginate_by = 20
 
@@ -32,5 +32,5 @@ class NodeDetailView(HashidsSingleObjectMixin, DetailView):
     """
     Shows an active node.
     """
-    queryset = Node.objects.useable()
+    queryset = Node.objects.active().usable()
     context_object_name = 'node'

@@ -8,12 +8,17 @@ from django.utils.translation import ugettext_lazy as _
 from hashids import Hashids
 
 
-class NodeManager(models.GeoManager):
+class NodeQuerySet(models.QuerySet):
     """
-    Manager for the Node model.
+    Custom QuerySet for Node objects.
     """
-    def useable(self):
-        return self.get_queryset().filter(is_active=True).exclude(location=None).exclude(Q(ipv4=None) | Q(ipv6=None))
+    def active(self):
+        """Returns active nodes."""
+        return self.filter(is_active=True)
+
+    def usable(self):
+        """Returns usable nodes. This are nodes with a location and at least one IP address."""
+        return self.exclude(location=None).exclude(Q(ipv4=None) | Q(ipv6=None))
 
 
 class Node(models.Model):
@@ -32,7 +37,7 @@ class Node(models.Model):
     is_active = models.BooleanField(default=True, verbose_name=_("is active"))
 
     # Manager
-    objects = NodeManager()
+    objects = NodeQuerySet.as_manager()
 
     # HashIDs
     hashids = Hashids(salt='N0d3', min_length=5)
