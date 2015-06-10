@@ -56,7 +56,7 @@ class Database(models.Model):
         :return: An instance of the interface for this Database or ``None`` if it is not available.
         """
         try:
-            module = __import__('geoip_databases.%s' % self.codename, fromlist=['geoip_databases'])
+            module = __import__('geodb.%s' % self.codename, fromlist=['geodb'])
             return module.interface()
         except (ImportError, AttributeError):
             return None

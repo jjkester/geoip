@@ -11,7 +11,7 @@ from django.contrib.gis.geos import Point
 from django.utils.datetime_safe import datetime
 from geoip2 import database
 from geoip2.errors import AddressNotFoundError
-from geoip_databases.interfaces import GeoIPInterface
+from geodb.interfaces import GeoIPInterface
 
 
 class GeoLite2(GeoIPInterface):
