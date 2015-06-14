@@ -4,15 +4,23 @@ Data models for the results of the measurements of the GeoIP application.
 from django.contrib.gis.db import models
 from django.utils.translation import ugettext_lazy as _
 from hashids import Hashids
+from geoip.contrib.choices import Choice
 
 
 class Dataset(models.Model):
     """
     Represents a single result set.
     """
+    class Status(Choice):
+        queued = (0, _("queued"))
+        running = (1, _("running"))
+        success = (2, _("success"))
+        error = (-1, _("error"))
+
     start = models.DateTimeField(blank=True, verbose_name=_("start time"))
     end = models.DateTimeField(blank=True, verbose_name=_("end time"))
     notes = models.TextField(blank=True, verbose_name=_("notes"))
+    status = models.SmallIntegerField(choices=Status.choices(), default=Status.queued.value, verbose_name=_("status"))
     created = models.DateTimeField(auto_now_add=True, verbose_name=_("created"))
     is_public = models.BooleanField(default=False, verbose_name=_("is public"))
 

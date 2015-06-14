@@ -14,7 +14,7 @@ class DatasetAdmin(admin.ModelAdmin):
     """
     fieldsets = (
         (None, {
-            'fields': ('start', 'end', 'notes',),
+            'fields': ('start', 'end', 'notes', 'status'),
         }),
         (_("Advanced options"), {
             'classes': 'collapse',
@@ -24,7 +24,7 @@ class DatasetAdmin(admin.ModelAdmin):
     list_display = ('__str__', 'start', 'end', 'is_public')
     list_display_links = ('__str__',)
     list_filter = ('is_public',)
-    readonly_fields = ('created',)
+    readonly_fields = ('status', 'created')
 
 
 @admin.register(Measurement)
