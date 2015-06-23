@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block page_title %}{% blocktrans %}Data set {{ dataset }}{% endblocktrans %}{% endblock %}
+{% block content %}
+  <section class="container">
+    <nav class="toolbar">
+      <div class="btn-group">
+        <a href="{% url 'measurements:dataset_list' %}" class="btn btn-default"><i class="glyphicon glyphicon-menu-left"></i> {% trans "Back to list" %}</a>
+      </div>
+      {% if user.is_staff %}
+        <div class="btn-group">
+          <button class="btn btn-warning disabled"><i class="glyphicon glyphicon-flash"></i> {% trans "Admin" %}</button>
+          <a href="{% url 'admin:measurements_dataset_change' dataset.pk %}" class="btn btn-warning"><i class="glyphicon glyphicon-pencil"></i> {% trans "Edit" %} {% trans "data set" %}</a>
+          <a href="{% url 'admin:measurements_dataset_delete' dataset.pk %}" class="btn btn-warning"><i class="glyphicon glyphicon-trash"></i> {% trans "Delete" %} {% trans "data set" %}</a>
+        </div>
+      {% endif %}
+    </nav>
+
+    <header class="page-header">
+      <h1>
+        {% trans "Data set" %}
+        <small>{{ dataset }}</small>
+      </h1>
+    </header>
+
+    <div class="row">
+      <div class="col-xs-6 col-md-3">
+        <h3>{% trans "Details" %}</h3>
+        <dl>
+          <dt>{% trans "ID" %}</dt>
+          <dd>{{ dataset.hashid }}</dd>
+          <dt>{% trans "Status" %}</dt>
+          <dd>{{ dataset.get_status_display|capfirst }}</dd>
+        </dl>
+      </div>
+      <div class="col-xs-6 col-md-3">
+        <h3>{% trans "Point in time" %}</h3>
+        <dl>
+          <dt>{% trans "Start" %}</dt>
+          <dd>{{ dataset.start|date:'Y-m-d H:i' }}</dd>
+          <dt>{% trans "End" %}</dt>
+          <dd>{{ dataset.end|date:'Y-m-d H:i' }}</dd>
+        </dl>
+      </div>
+      <div class="col-sm-6 col-md-3">
+        <h3>{% trans "Size" %}</h3>
+        <dl>
+          <dt>{% trans "Databases" %}</dt>
+          <dd>{{ dataset.databases__count }}</dd>
+          <dt>{% trans "Nodes" %}</dt>
+          <dd>{{ dataset.nodes__count }}</dd>
+        </dl>
+      </div>
+      <div class="col-sm-6 col-md-3">
+        <h3>&nbsp;</h3>
+        <dl>
+          <dt>{% trans "Measurement points" %}</dt>
+          <dd>{{ dataset.measurements.count }}</dd>
+        </dl>
+      </div>
+    </div>
+
+  </section>
+{% endblock %}

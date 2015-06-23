@@ -32,8 +32,8 @@
         <li{% if request.resolver_match.namespaces.0 == 'nodes' %} class="active"{% endif %}>
           <a href="{% url 'nodes:index' %}">{% trans "Nodes" %}</a>
         </li>
-        <li>
-          <a href="">{% trans "Measurements" %}</a>
+        <li{% if request.resolver_match.namespaces.0 == 'measurements' %} class="active"{% endif %}>
+          <a href="{% url 'measurements:dataset_list' %}">{% trans "Measurements" %}</a>
         </li>
         <li>
           <a href="">{% trans "Statistics" %}</a>

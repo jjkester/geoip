@@ -60,8 +60,8 @@ class Choice(Enum):
         choices = []
 
         for member in cls:
-            if isinstance(member, (tuple, list)) and len(member) == 2:
-                db_value, readable_name = member
+            if isinstance(member.value, (tuple, list)) and len(member.value) == 2:
+                db_value, readable_name = member.value
             else:
                 db_value = member.name
                 readable_name = member.value
@@ -73,5 +73,13 @@ class Choice(Enum):
     def __str__(self):
         # Return only the name to allow a choice to be used directly without the need of accessing `name` when using a
         # choice in QuerySets etc.
+        if isinstance(self.value, (tuple, list)):
+            return str(self.value[0])
         return self.name
+
+    def __int__(self):
+        if isinstance(self.value, (tuple, list)):
+            return int(self.value[0])
+        return int(self.name)
+
 

@@ -11,5 +11,9 @@ class HashidsSingleObjectMixin(object):
     """
     def get_object(self, queryset=None):
         if 'hashid' in self.kwargs and not 'pk' in self.kwargs:
-            self.kwargs['pk'] = self.queryset.model.hashids.decode(self.kwargs.get('hashid'))[0]
+            decoded = self.queryset.model.hashids.decode(self.kwargs.get('hashid'))
+            if decoded and len(decoded) == 1:
+                self.kwargs['pk'] = decoded[0]
+            else:
+                self.kwargs['pk'] = -1
         return super(HashidsSingleObjectMixin, self).get_object(queryset)

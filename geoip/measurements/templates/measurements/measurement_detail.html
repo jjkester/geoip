@@ -1,0 +1,142 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block page_title %}{% blocktrans %}Measurement {{ measurement }}{% endblocktrans %}{% endblock %}
+{% block jumbotron %}
+  <div id="map" style="height: 400px; margin: -48px 0;">
+    <div style="position: absolute; bottom: 0; left: 0; right: 0; z-index: 1000;">
+      <div class="text-center h5">
+        <span class="label label-primary">{% trans "Node location" %}</span>
+        <span class="label label-warning">{% trans "Database location" %}</span>
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $.getScript("http://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js", function(data, status, jqxhr) {
+        var map = L.map("map").setView(center=[{{ measurement.node.location.0 }}, {{ measurement.node.location.1 }}], zoom=11, crs=L.CRS.EPSG4326);
+
+        // Add openstreetmap
+        L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          maxZoom: 15,
+          subdomains: ['a', 'b', 'c'],
+          attribution: 'Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        var nodemarker = L.circleMarker([{{ measurement.node.location.0 }}, {{ measurement.node.location.1 }}], {
+          color: '#2c3e50',
+          clickable: false
+        }).addTo(map);
+        var ipv4marker = L.circleMarker([{{ measurement.ipv4_location.0 }}, {{ measurement.ipv4_location.1 }}], {
+          color: '#f39c12',
+          clickable: false
+        }).addTo(map);
+        var ipv6marker = L.circleMarker([{{ measurement.ipv6_location.0 }}, {{ measurement.ipv6_location.1 }}], {
+          color: '#f39c12',
+          clickable: false
+        }).addTo(map);
+
+        var group = new L.featureGroup([nodemarker, ipv4marker, ipv6marker]);
+        map.fitBounds(group.getBounds());
+      });
+    });
+  </script>
+{% endblock %}
+{% block content %}
+  <section class="container">
+    <nav class="toolbar">
+      <div class="btn-group">
+        <a href="{% url 'measurements:dataset_detail' hashid=measurement.dataset.hashid %}" class="btn btn-default"><i class="glyphicon glyphicon-menu-left"></i> {% trans "Back to" %} {% trans "data set" %}</a>
+      </div>
+      <div class="btn-group">
+        <a href="{% url 'nodes:node_detail' hashid=measurement.node.hashid %}" class="btn btn-default"><i class="glyphicon glyphicon-hdd"></i> {% trans "Node details" %}</a>
+        <a href="{% url 'databases:database_detail' hashid=measurement.database.hashid %}" class="btn btn-default"><i class="glyphicon glyphicon-map-marker"></i> {% trans "Database details" %}</a>
+      </div>
+      {% if user.is_staff %}
+        <div class="btn-group">
+          <button class="btn btn-warning disabled"><i class="glyphicon glyphicon-flash"></i> {% trans "Admin" %}</button>
+          <a href="{% url 'admin:measurements_measurement_change' measurement.pk %}" class="btn btn-warning"><i class="glyphicon glyphicon-pencil"></i> {% trans "Edit" %} {% trans "measurement" %}</a>
+          <a href="{% url 'admin:measurements_measurement_delete' measurement.pk %}" class="btn btn-warning"><i class="glyphicon glyphicon-trash"></i> {% trans "Delete" %} {% trans "measurement" %}</a>
+        </div>
+      {% endif %}
+    </nav>
+
+    <header class="page-header">
+      <h1>
+        {% trans "Measurement" %}
+        <small>{{ measurement }}</small>
+      </h1>
+    </header>
+
+    <div class="row">
+      <div class="col-sm-4">
+        <div class="panel panel-default text-center">
+          <div class="panel-body">
+            <p class="h4">{{ measurement.distance_ipv4.km|floatformat:'0' }} km</p>
+          </div>
+          <div class="panel-footer">{% trans "IPv4 accuracy" %}</div>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="panel panel-default text-center">
+          <div class="panel-body">
+            <p class="h4">{{ measurement.distance_ipv6.km|floatformat:'0' }} km</p>
+          </div>
+          <div class="panel-footer">{% trans "IPv6 accuracy" %}</div>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="panel panel-default text-center">
+          <div class="panel-body">
+            <p class="h4">{{ measurement.distance_ipv4_ipv6.km|floatformat:'0' }} km</p>
+          </div>
+          <div class="panel-footer">{% trans "IPv4 - IPv6 difference" %}</div>
+        </div>
+      </div>
+    </div>
+
+    <hr>
+
+    <h2>
+      {% trans "Node" %}
+      <small>{{ measurement.node }}</small>
+    </h2>
+
+    <div class="row">
+      <div class="col-sm-12">
+        <h3>
+          {% trans "Node location" %}
+          <small>{{ measurement.node.location.0 }}, {{ measurement.node.location.1 }}</small>
+        </h3>
+        <div id="nodemap" style="height: 400px;"></div>
+        {% include 'elements/map.html' with id='nodemap' point=measurement.node.location %}
+      </div>
+    </div>
+
+    <hr>
+
+    <h2>
+      {% trans "Database" %}
+      <small>{{ measurement.database.name }}</small>
+    </h2>
+
+    <div class="row">
+      <div class="col-sm-6">
+        <h3>
+          {% trans "IPv4 location" %}
+          <small>{{ measurement.ipv4_location.0 }}, {{ measurement.ipv4_location.1 }}</small>
+        </h3>
+        <div id="ipv4map" style="height: 400px;"></div>
+        {% include 'elements/map.html' with id='ipv4map' point=measurement.ipv4_location %}
+      </div>
+      <div class="col-sm-6">
+        <h3>
+          {% trans "IPv6 location" %}
+          <small>{{ measurement.ipv6_location.0 }}, {{ measurement.ipv6_location.1 }}</small>
+        </h3>
+        <div id="ipv6map" style="height: 400px;"></div>
+        {% include 'elements/map.html' with id='ipv6map' point=measurement.ipv6_location %}
+      </div>
+    </div>
+
+  </section>
+{% endblock %}

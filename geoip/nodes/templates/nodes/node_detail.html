@@ -2,7 +2,7 @@
 {% load i18n %}
 {% block page_title %}{% blocktrans %}Node {{ node }}{% endblocktrans %}{% endblock %}
 {% block jumbotron %}
-  <div id="map" style="height: 300px; margin: -48px 0;"></div>
+  <div id="map" style="height: 400px; margin: -48px 0;"></div>
   {% include 'elements/map.html' with point=node.location %}
 {% endblock %}
 {% block content %}
@@ -68,12 +68,36 @@
 
     <h2>{% trans "Measurements" %}</h2>
 
-    {% for dataset in datasets %}
-    {% empty %}
+    {% if node.measurements.all %}
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>&nbsp;</th>
+            <th>{% trans "Data set" %}</th>
+            <th>{% trans "Date" %}</th>
+            <th>{% trans "Database" %}</th>
+            <th class="text-right"></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for measurement in node.measurements.all %}
+            <tr>
+              <td>{{ measurement.hashid }}</td>
+              <td>{{ measurement.dataset.hashid }}</td>
+              <td>{{ measurement.created|date:'Y-m-d H:i' }}</td>
+              <td>{{ measurement.database.name }}</td>
+              <td class="text-right">
+                <a href="{% url 'measurements:measurement_detail' hashid=measurement.hashid %}" class="btn btn-default btn-xs">{% trans "Details" %}</a>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
       <div class="alert alert-info">
         <h4><i class="glyphicon glyphicon-info-sign"></i> {% blocktrans %}This node has not yet participated in any measurements{% endblocktrans %}</h4>
         <p>{% blocktrans %}This usually means that there has been no new measurement since the node was added. The IP addresses of the node will be tested in the upcoming measurements.{% endblocktrans %}</p>
       </div>
-    {% endfor %}
+    {% endif %}
   </section>
 {% endblock %}

@@ -14,6 +14,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='dataset',
             name='status',
-            field=models.SmallIntegerField(verbose_name='status', default=(0, 'queued'), choices=[('queued', (0, 'queued')), ('running', (1, 'running')), ('success', (2, 'success')), ('error', (-1, 'error'))]),
+            field=models.SmallIntegerField(verbose_name='status', default=0, choices=[(0, 'queued'), (1, 'running'), (2, 'success'), (-1, 'error')]),
         ),
     ]

@@ -2,6 +2,8 @@
 Data models for the results of the measurements of the GeoIP application.
 """
 from django.contrib.gis.db import models
+from django.contrib.gis.measure import Distance
+from django.utils.functional import cached_property
 from django.utils.translation import ugettext_lazy as _
 from hashids import Hashids
 from geoip.contrib.choices import Choice
@@ -20,7 +22,7 @@ class Dataset(models.Model):
     start = models.DateTimeField(blank=True, verbose_name=_("start time"))
     end = models.DateTimeField(blank=True, verbose_name=_("end time"))
     notes = models.TextField(blank=True, verbose_name=_("notes"))
-    status = models.SmallIntegerField(choices=Status.choices(), default=Status.queued.value, verbose_name=_("status"))
+    status = models.SmallIntegerField(choices=Status.choices(), default=int(Status.queued), verbose_name=_("status"))
     created = models.DateTimeField(auto_now_add=True, verbose_name=_("created"))
     is_public = models.BooleanField(default=False, verbose_name=_("is public"))
 
@@ -35,9 +37,13 @@ class Dataset(models.Model):
 
     def __str__(self):
         return "{identifier:s} ({date:s})".format(
-            identifier=self.hashids.encode(self.id),
+            identifier=self.hashid,
             date=self.start.strftime('%Y-%m-%d'),
         )
+
+    @property
+    def hashid(self):
+        return self.hashids.encode(self.id)
 
 
 class Measurement(models.Model):
@@ -69,5 +75,24 @@ class Measurement(models.Model):
     def __str__(self):
         return "{verbose_name:s} {identifier:s}".format(
             verbose_name=self._meta.verbose_name.capitalize(),
-            identifier=self.hashids.encode(self.id),
+            identifier=self.hashid,
         )
+
+    @property
+    def hashid(self):
+        return self.hashids.encode(self.id)
+
+    @cached_property
+    def distance_ipv4(self):
+        return self.get_distance(self.node.location, field_name='ipv4_location')
+
+    @cached_property
+    def distance_ipv6(self):
+        return self.get_distance(self.node.location, field_name='ipv6_location')
+
+    @cached_property
+    def distance_ipv4_ipv6(self):
+        return self.get_distance(self.ipv4_location, field_name='ipv6_location')
+
+    def get_distance(self, geom, **kwargs):
+        return Measurement.objects.filter(pk=self.pk).distance(geom, **kwargs).get().distance
