@@ -40,6 +40,7 @@ INSTALLED_APPS = (
     'django.contrib.gis',
 
     'bootstrapform',
+    'djcelery',
 
     'geodb',
 
@@ -118,6 +119,9 @@ STATICFILES_DIRS = (
 )
 
 STATIC_URL = '/static/'
+
+
+CELERY_RESULT_BACKEND = 'djcelery.backends.database:DatabaseBackend'
 
 try:
     from geoip.local_settings import *
