@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block page_title %}{% blocktrans %}Global coverage{% endblocktrans %}{% endblock %}
+{% block content %}
+  <section class="container">
+    <nav class="toolbar">
+      <div class="btn-group">
+        <a href="{% url 'nodes:index' %}" class="btn btn-default"><i class="glyphicon glyphicon-menu-left"></i> {% trans "Back to overview" %}</a>
+      </div>
+      <div class="btn-group">
+        <a href="{% url 'nodes:node_list' %}" class="btn btn-default"><i class="glyphicon glyphicon-list"></i> {% trans "Browse all nodes" %}</a>
+      </div>
+      {% if user.is_staff %}
+        <div class="btn-group">
+          <button class="btn btn-warning disabled"><i class="glyphicon glyphicon-flash"></i> {% trans "Admin" %}</button>
+          <a href="{% url 'admin:nodes_node_changelist' %}" class="btn btn-warning"><i class="glyphicon glyphicon-list"></i> {% trans "All" %} {% trans "nodes" %}</a>
+          <a href="{% url 'admin:nodes_node_add' %}" class="btn btn-warning"><i class="glyphicon glyphicon-plus"></i> {% trans "Add" %} {% trans "node" %}</a>
+        </div>
+      {% endif %}
+    </nav>
+
+    <header class="page-header">
+      <h1>
+        {% trans "Global coverage" %}
+      </h1>
+    </header>
+
+    <div id="global_map" style="height: 600px;"></div>
+    {% include 'elements/map.html' with id='global_map' mutable=True points=points zoom=2 %}
+  </section>
+{% endblock %}

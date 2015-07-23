@@ -2,7 +2,7 @@
 <script type="text/javascript">
   $(document).ready(function() {
     $.getScript("http://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js", function(data, status, jqxhr) {
-      var map = L.map("{{ id|default:'map'|escapejs }}").setView(center=[{{ point.0 }}, {{ point.1 }}], zoom=11, crs=L.CRS.EPSG4326);
+      var map = L.map("{{ id|default:'map'|escapejs }}").setView(center={% if point %}[{{ point.0 }}, {{ point.1 }}]{% else %}[52.2432762, 6.8549161]{% endif %}, zoom={{ zoom|default:11 }}, crs=L.CRS.EPSG4326);
 
       {% if not mutable %}
       // Disable dragging and zooming
@@ -21,10 +21,21 @@
         subdomains: ['a', 'b', 'c'],
         attribution: 'Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
       }).addTo(map);
+      {% if point %}
       var marker = L.circleMarker([{{ point.0 }}, {{ point.1 }}], {
         color: '#2c3e50',
         clickable: false
       }).addTo(map);
+      {% endif %}
+      {% if points %}
+      var points = [{% for point in points %}[{{ point.0 }}, {{ point.1 }}]{% if not forloop.last %},{% endif %}{% endfor %}];
+      points.forEach(function(element, index) {
+        L.circleMarker(element, {
+          color: '#2c3e50',
+          clickable: false
+        }).addTo(map);
+      });
+      {% endif %}
     });
   });
 </script>

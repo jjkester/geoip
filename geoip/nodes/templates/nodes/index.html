@@ -16,7 +16,7 @@
         <a href="{% url 'nodes:node_list' %}" class="btn btn-default"><i class="glyphicon glyphicon-list"></i> {% trans "Browse all nodes" %}</a>
       </div>
       <div class="btn-group">
-        <a href="" class="btn btn-default"><i class="glyphicon glyphicon-globe"></i> {% trans "Global coverage" %}</a>
+        <a href="{% url 'nodes:node_map' %}" class="btn btn-default"><i class="glyphicon glyphicon-globe"></i> {% trans "Global coverage" %}</a>
       </div>
       {% if user.is_staff %}
         <div class="btn-group">
