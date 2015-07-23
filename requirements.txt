@@ -7,4 +7,4 @@ psycopg2
 requests
 
 # GeoIP database requirements
--r geoip-databases/requirements.txt
+-r geodb/requirements.txt
