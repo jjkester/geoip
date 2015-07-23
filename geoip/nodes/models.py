@@ -17,8 +17,8 @@ class NodeQuerySet(models.QuerySet):
         return self.filter(is_active=True)
 
     def usable(self):
-        """Returns usable nodes. This are nodes with a location and at least one IP address."""
-        return self.exclude(location=None).exclude(Q(ipv4=None) | Q(ipv6=None))
+        """Returns usable nodes. This are nodes with a location and at both an IPv4 and IPv6 address."""
+        return self.exclude(Q(location=None) | Q(ipv4=None) | Q(ipv6=None))
 
 
 class Node(models.Model):
@@ -43,6 +43,7 @@ class Node(models.Model):
     hashids = Hashids(salt='N0d3', min_length=5)
 
     class Meta:
+        ordering = ['created']
         verbose_name = _("node")
         verbose_name_plural = _("nodes")
 

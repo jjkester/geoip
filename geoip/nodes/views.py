@@ -27,7 +27,7 @@ class NodeListView(ListView):
     """
     queryset = Node.objects.active().usable()
     context_object_name = 'nodes'
-    paginate_by = 20
+    paginate_by = 100
 
     def get_context_data(self, **kwargs):
         context = super(NodeListView, self).get_context_data(**kwargs)

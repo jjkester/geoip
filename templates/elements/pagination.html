@@ -1,7 +1,7 @@
 {% load i18n %}
 {% if page_obj.has_other_pages %}
   <nav class="text-center">
-    <ul class="pagination">
+    <ul class="pagination small">
       {% if page_obj.has_previous %}
         <li><a href="{% url request.resolver_match.view_name page=page_obj.previous_page_number %}"><i class="glyphicon glyphicon-menu-left"></i></a></li>
       {% else %}
