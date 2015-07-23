@@ -68,6 +68,7 @@ class Measurement(models.Model):
     hashids = Hashids(salt='m3a5ur3m3n7', min_length=12)
 
     class Meta:
+        get_latest_by = 'created'
         ordering = ['dataset', 'database', 'created']
         verbose_name = _("measurement")
         verbose_name_plural = _("measurements")
