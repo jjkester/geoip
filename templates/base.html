@@ -40,8 +40,8 @@
         </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li>
-          <a href="">{% trans "About" %}</a>
+        <li{% if request.resolver_match.namespaces|length_is:0 and request.resolver_match.url_name == 'about' %} class="active"{% endif %}>
+          <a href="{% url 'about' %}">{% trans "About" %}</a>
         </li>
       </ul>
     </div>

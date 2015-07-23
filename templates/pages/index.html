@@ -13,33 +13,33 @@
       <div class="col-sm-6 col-md-3">
         <div class="panel panel-primary text-center">
           <div class="panel-body">
-            <p class="h2">1.251</p>
+            <p class="h2">{{ statistics.node_count }}</p>
           </div>
-          <div class="panel-footer">Test nodes</div>
+          <div class="panel-footer">{% blocktrans %}Test nodes{% endblocktrans %}</div>
         </div>
       </div>
       <div class="col-sm-6 col-md-3">
         <div class="panel panel-primary text-center">
           <div class="panel-body">
-            <p class="h2">8</p>
+            <p class="h2">{{ statistics.dataset_count }}</p>
           </div>
-          <div class="panel-footer">Historical measurements</div>
+          <div class="panel-footer">{% blocktrans %}Historical measurements{% endblocktrans %}</div>
         </div>
       </div>
       <div class="col-sm-6 col-md-3">
         <div class="panel panel-primary text-center">
           <div class="panel-body">
-            <p class="h2">91%</p>
+            <p class="h2">{{ statistics.best_score|floatformat|default:'0' }}%</p>
           </div>
-          <div class="panel-footer">Best score</div>
+          <div class="panel-footer">{% blocktrans %}Best score{% endblocktrans %}</div>
         </div>
       </div>
       <div class="col-sm-6 col-md-3">
         <div class="panel panel-primary text-center">
           <div class="panel-body">
-            <p class="h2">90 days</p>
+            <p class="h2">{{ statistics.last_measurement.created|timesince|default:'&mdash;' }}</p>
           </div>
-          <div class="panel-footer">Last measurement</div>
+          <div class="panel-footer">{% blocktrans %}Last measurement{% endblocktrans %}</div>
         </div>
       </div>
     </div>
@@ -47,8 +47,9 @@
 
   <hr>
 
-  <div class="container">
-    <h1>Based on scientific research</h1>
-    <p>The author of this site, <strong>Jan-Jelle Kester</strong>, wrote a paper.</p>
+  <div class="container text-center">
+    <h1>{% blocktrans %}Created for scientific research{% endblocktrans %}</h1>
+    <p class="lead text-muted">{% blocktrans %}This platform was originally created as a platform for automating a research project.{% endblocktrans %}</p>
+    <p><a href="{% url 'about' %}" class="btn btn-success">{% trans "Read more" %}</a></p>
   </div>
 {% endblock %}

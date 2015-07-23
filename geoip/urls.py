@@ -17,7 +17,7 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 
-from geoip.views import HomepageView
+from geoip.views import HomepageView, AboutView
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
@@ -27,5 +27,6 @@ urlpatterns = [
     url(r'^measurements/', include('geoip.measurements.urls', namespace='measurements')),
     url(r'^statistics/', include('geoip.statistics.urls', namespace='statistics')),
 
+    url(r'^about/$', AboutView.as_view(), name='about'),
     url(r'^$', HomepageView.as_view(), name='home'),
 ]
