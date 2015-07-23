@@ -7,8 +7,14 @@
       {% else %}
         <li class="disabled"><a href=""><i class="glyphicon glyphicon-menu-left"></i></a></li>
       {% endif %}
-      {% for page_number in page_obj.paginator.page_range %}
+      {% for page_number in page_numbers|default:page_obj.paginator.page_range %}
+        {% if forloop.first and page_number != 1 %}
+          <li><a>&hellip;</a></li>
+        {% elif forloop.last and page_number != page_obj.paginator.num_pages %}
+          <li><a>&hellip;</a></li>
+        {% else %}
         <li{% if page_number == page_obj.number %} class="active"{% endif %}><a href="{% url request.resolver_match.view_name page=page_number %}">{{ page_number }}</a></li>
+        {% endif %}
       {% endfor %}
       {% if page_obj.has_next %}
         <li><a href="{% url request.resolver_match.view_name page=page_obj.next_page_number %}"><i class="glyphicon glyphicon-menu-right"></i></a></li>

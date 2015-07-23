@@ -3,7 +3,7 @@ Views for the GeoIP nodes app.
 """
 from django.db.models import Count
 from django.views.generic import TemplateView, ListView, DetailView
-from geoip.contrib.views import HashidsSingleObjectMixin
+from geoip.contrib.views import HashidsSingleObjectMixin, get_pagination_range
 from geoip.measurements.models import Dataset
 from geoip.nodes.models import Node, DataSource
 
@@ -32,8 +32,7 @@ class NodeListView(ListView):
     def get_context_data(self, **kwargs):
         context = super(NodeListView, self).get_context_data(**kwargs)
         context['all_nodes'] = Node.objects.all()
-        context['page_numbers'] = [1, context['paginator'].num_pages]
-        context['page_numbers'].extend([n for n in context['paginator'].page_range if abs(context['page_obj'].number - n) < 5])
+        context['page_numbers'] = get_pagination_range(context['page_obj'])
         return context
 
 
