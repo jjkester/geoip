@@ -43,5 +43,5 @@ class Scraper(BaseScraper):
 
                 url = data['meta']['next']
         except KeyboardInterrupt:
-            pass
+            print("Process interrupted by user.")
         return counter_total, counter_created
