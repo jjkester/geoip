@@ -2,11 +2,21 @@
 Data models for the results of the measurements of the GeoIP application.
 """
 from django.contrib.gis.db import models
-from django.contrib.gis.measure import Distance
 from django.utils.functional import cached_property
 from django.utils.translation import ugettext_lazy as _
 from hashids import Hashids
 from geoip.contrib.choices import Choice
+
+
+class DatasetQuerySet(models.QuerySet):
+    """
+    Custom query set for result sets.
+    """
+    def public(self):
+        return self.filter(is_public=True)
+
+    def completed(self):
+        return self.filter(status=int(Dataset.Status.success))
 
 
 class Dataset(models.Model):
@@ -25,6 +35,8 @@ class Dataset(models.Model):
     status = models.SmallIntegerField(choices=Status.choices(), default=int(Status.queued), verbose_name=_("status"))
     created = models.DateTimeField(auto_now_add=True, verbose_name=_("created"))
     is_public = models.BooleanField(default=False, verbose_name=_("is public"))
+
+    objects = DatasetQuerySet.as_manager()
 
     # HashIDs
     hashids = Hashids(salt='D474S37', min_length=5)
@@ -57,8 +69,11 @@ class Measurement(models.Model):
     database = models.ForeignKey('databases.Database', on_delete=models.PROTECT, related_name='measurements',
                                  verbose_name=_("GeoIP database"))
     notes = models.TextField(blank=True, verbose_name=_("notes"))
-    ipv4_location = models.PointField(geography=True, verbose_name=_("IPv4 location"))
-    ipv6_location = models.PointField(geography=True, verbose_name=_("IPv6 location"))
+    ipv4_location = models.PointField(blank=True, null=True, geography=True, verbose_name=_("IPv4 location"))
+    ipv6_location = models.PointField(blank=True, null=True, geography=True, verbose_name=_("IPv6 location"))
+    ipv4_distance = models.FloatField(blank=True, null=True, editable=False, verbose_name=_("IPv4 distance"))
+    ipv6_distance = models.FloatField(blank=True, null=True, editable=False, verbose_name=_("IPv6 distance"))
+    mutual_distance = models.FloatField(blank=True, null=True, editable=False, verbose_name=_("mutual distance"))
     created = models.DateTimeField(auto_now_add=True, verbose_name=_("created"))
 
     # Manager
@@ -84,8 +99,7 @@ class Measurement(models.Model):
     def hashid(self):
         return self.hashids.encode(self.id)
 
-    @cached_property
-    def distance_ipv4(self):
+    def get_ipv4_dis(self):
         return self.get_distance(self.node.location, field_name='ipv4_location')
 
     @cached_property
@@ -96,5 +110,15 @@ class Measurement(models.Model):
     def distance_ipv4_ipv6(self):
         return self.get_distance(self.ipv4_location, field_name='ipv6_location')
 
-    def get_distance(self, geom, **kwargs):
-        return Measurement.objects.filter(pk=self.pk).distance(geom, **kwargs).get().distance
+    def calculate_distances(self):
+        queryset = Measurement.objects.filter(pk=self.pk)
+        ipv4_distance = queryset.distance(self.node.location, field_name='ipv4_location').get().distance
+        ipv6_distance = queryset.distance(self.node.location, field_name='ipv6_location').get().distance
+
+        if ipv4_distance:
+            self.ipv4_distance = ipv4_distance.km
+        if ipv6_distance:
+            self.ipv6_distance = ipv6_distance.km
+        if ipv4_distance and ipv6_distance:
+            self.mutual_distance = queryset.distance(self.ipv4_location, field_name='ipv6_location').get().distance.km
+        return self

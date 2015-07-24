@@ -60,5 +60,34 @@
       </div>
     </div>
 
+    <hr>
+
+    <div class="row">
+      <div class="col-sm-4">
+        <div class="panel panel-primary text-center">
+          <div class="panel-body">
+            <p class="h2">{{ statistics.accuracy_ipv4|floatformat }} km</p>
+          </div>
+          <div class="panel-footer">{% trans "Average IPv4 accuracy" %}</div>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="panel panel-primary text-center">
+          <div class="panel-body">
+            <p class="h2">{{ statistics.accuracy_ipv6|floatformat }} km</p>
+          </div>
+          <div class="panel-footer">{% trans "Average IPv6 accuracy" %}</div>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="panel panel-primary text-center">
+          <div class="panel-body">
+            <p class="h2">{{ statistics.accuracy_difference|floatformat }} km</p>
+          </div>
+          <div class="panel-footer">{% trans "Average difference" %}</div>
+        </div>
+      </div>
+    </div>
+
   </section>
 {% endblock %}

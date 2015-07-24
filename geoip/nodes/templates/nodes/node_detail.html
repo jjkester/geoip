@@ -68,7 +68,7 @@
 
     <h2>{% trans "Measurements" %}</h2>
 
-    {% if node.measurements.all %}
+    {% if measurements %}
       <table class="table table-striped">
         <thead>
           <tr>
@@ -80,7 +80,7 @@
           </tr>
         </thead>
         <tbody>
-          {% for measurement in node.measurements.all %}
+          {% for measurement in measurements %}
             <tr>
               <td>{{ measurement.hashid }}</td>
               <td>{{ measurement.dataset.hashid }}</td>

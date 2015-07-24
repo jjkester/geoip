@@ -9,8 +9,8 @@ from geodb import GeoDB
 logger = logging.getLogger('tasks')
 
 
-@task(bind=True, throws=(GeoDB.NotFoundError,))
-def query_database(self, database_name, ip_address):
+@task(throws=(GeoDB.NotFoundError,))
+def query_database(database_name, ip_address):
     """
     Queries a GeoIP database for a location for the given IP address.
 

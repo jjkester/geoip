@@ -4,6 +4,7 @@ Django Admin configuration for the GeoIP results app.
 from django.contrib import admin
 from django.contrib.gis.admin import OSMGeoAdmin
 from django.utils.translation import ugettext_lazy as _
+from geoip.measurements.admin_actions import run_measurements
 from geoip.measurements.models import Dataset, Measurement
 
 
@@ -12,6 +13,7 @@ class DatasetAdmin(admin.ModelAdmin):
     """
     Django Admin configuration for the Dataset model.
     """
+    actions = (run_measurements,)
     fieldsets = (
         (None, {
             'fields': ('start', 'end', 'notes', 'status'),

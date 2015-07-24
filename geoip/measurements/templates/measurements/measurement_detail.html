@@ -24,14 +24,17 @@
 
         var nodemarker = L.circleMarker([{{ measurement.node.location.0 }}, {{ measurement.node.location.1 }}], {
           color: '#2c3e50',
+          opacity: 1,
           clickable: false
         }).addTo(map);
         var ipv4marker = L.circleMarker([{{ measurement.ipv4_location.0 }}, {{ measurement.ipv4_location.1 }}], {
           color: '#f39c12',
+          opacity: 1,
           clickable: false
         }).addTo(map);
         var ipv6marker = L.circleMarker([{{ measurement.ipv6_location.0 }}, {{ measurement.ipv6_location.1 }}], {
           color: '#f39c12',
+          opacity: 1,
           clickable: false
         }).addTo(map);
 
@@ -71,7 +74,7 @@
       <div class="col-sm-4">
         <div class="panel panel-default text-center">
           <div class="panel-body">
-            <p class="h4">{{ measurement.distance_ipv4.km|floatformat:'0' }} km</p>
+            <p class="h3">{{ measurement.ipv4_distance|floatformat:'0' }} km</p>
           </div>
           <div class="panel-footer">{% trans "IPv4 accuracy" %}</div>
         </div>
@@ -79,7 +82,7 @@
       <div class="col-sm-4">
         <div class="panel panel-default text-center">
           <div class="panel-body">
-            <p class="h4">{{ measurement.distance_ipv6.km|floatformat:'0' }} km</p>
+            <p class="h3">{{ measurement.ipv6_distance|floatformat:'0' }} km</p>
           </div>
           <div class="panel-footer">{% trans "IPv6 accuracy" %}</div>
         </div>
@@ -87,7 +90,7 @@
       <div class="col-sm-4">
         <div class="panel panel-default text-center">
           <div class="panel-body">
-            <p class="h4">{{ measurement.distance_ipv4_ipv6.km|floatformat:'0' }} km</p>
+            <p class="h3">{{ measurement.mutual_distance|floatformat:'0' }} km</p>
           </div>
           <div class="panel-footer">{% trans "IPv4 - IPv6 difference" %}</div>
         </div>
