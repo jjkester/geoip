@@ -48,7 +48,7 @@ class GeoLite2(GeoIPInterface):
                 response.location.longitude,
                 srid=4326,
             )
-        except AddressNotFoundError:
+        except (AddressNotFoundError, TypeError):
             return None
 
     def _get_reader(self):
