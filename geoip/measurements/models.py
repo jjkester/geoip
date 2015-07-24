@@ -19,8 +19,8 @@ class Dataset(models.Model):
         success = (2, _("success"))
         error = (-1, _("error"))
 
-    start = models.DateTimeField(blank=True, verbose_name=_("start time"))
-    end = models.DateTimeField(blank=True, verbose_name=_("end time"))
+    start = models.DateTimeField(blank=True, null=True, verbose_name=_("start time"))
+    end = models.DateTimeField(blank=True, null=True, verbose_name=_("end time"))
     notes = models.TextField(blank=True, verbose_name=_("notes"))
     status = models.SmallIntegerField(choices=Status.choices(), default=int(Status.queued), verbose_name=_("status"))
     created = models.DateTimeField(auto_now_add=True, verbose_name=_("created"))
@@ -70,6 +70,7 @@ class Measurement(models.Model):
     class Meta:
         get_latest_by = 'created'
         ordering = ['dataset', 'database', 'created']
+        unique_together = ('node', 'dataset', 'database')
         verbose_name = _("measurement")
         verbose_name_plural = _("measurements")
 
