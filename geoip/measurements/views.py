@@ -43,7 +43,6 @@ class DatasetDetailView(HashidsSingleObjectMixin, DetailView):
                 accuracy_ipv6=Avg('ipv6_distance'),
                 accuracy_difference=Avg('mutual_distance'),
             )
-        print(aggregates)
         return aggregates
 
 

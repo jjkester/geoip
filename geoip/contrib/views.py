@@ -32,6 +32,4 @@ def get_pagination_range(page_obj, count=15):
     if after < count:
         before = min(current - 1, before + count - after)
 
-    print("Cnt=%d Cur=%d Lst=%d Bef=%d Aft=%d" % (count, current, last, before, after))
-
     return range(current - before, current + after + 1)
