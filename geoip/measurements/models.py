@@ -2,6 +2,7 @@
 Data models for the results of the measurements of the GeoIP application.
 """
 from django.contrib.gis.db import models
+from django.utils import timezone
 from django.utils.functional import cached_property
 from django.utils.translation import ugettext_lazy as _
 from hashids import Hashids
@@ -56,6 +57,14 @@ class Dataset(models.Model):
     @property
     def hashid(self):
         return self.hashids.encode(self.id)
+
+    @property
+    def run_time(self):
+        return self.end - self.start
+
+    @property
+    def run_time_now(self):
+        return timezone.now() - self.run_time
 
 
 class Measurement(models.Model):
