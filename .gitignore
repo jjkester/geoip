@@ -63,3 +63,6 @@ target/
 
 # Machine-specific settings
 geoip/local_settings.py
+
+# Binary databases
+databases/
