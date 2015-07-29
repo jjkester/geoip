@@ -2,7 +2,7 @@
 <script type="text/javascript">
   $(document).ready(function() {
     $.getScript("http://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js", function(data, status, jqxhr) {
-      var map = L.map("{{ id|default:'map'|escapejs }}").setView(center={% if point %}[{{ point.0 }}, {{ point.1 }}]{% else %}[52.2432762, 6.8549161]{% endif %}, zoom={{ zoom|default:11 }}, crs=L.CRS.EPSG4326);
+      var map = L.map("{{ id|default:'map'|escapejs }}").setView(center={% if point %}[{{ point.0 }}, {{ point.1 }}]{% else %}[33, 0]{% endif %}, zoom={{ zoom|default:11 }}, crs=L.CRS.EPSG4326);
 
       {% if not mutable %}
       // Disable dragging and zooming
