@@ -3,7 +3,6 @@ Data models for the results of the measurements of the GeoIP application.
 """
 from django.contrib.gis.db import models
 from django.utils import timezone
-from django.utils.functional import cached_property
 from django.utils.translation import ugettext_lazy as _
 from hashids import Hashids
 from geoip.contrib.choices import Choice
@@ -80,9 +79,9 @@ class Measurement(models.Model):
     notes = models.TextField(blank=True, verbose_name=_("notes"))
     ipv4_location = models.PointField(blank=True, null=True, geography=True, verbose_name=_("IPv4 location"))
     ipv6_location = models.PointField(blank=True, null=True, geography=True, verbose_name=_("IPv6 location"))
-    ipv4_distance = models.FloatField(blank=True, null=True, editable=False, verbose_name=_("IPv4 distance"))
-    ipv6_distance = models.FloatField(blank=True, null=True, editable=False, verbose_name=_("IPv6 distance"))
-    mutual_distance = models.FloatField(blank=True, null=True, editable=False, verbose_name=_("mutual distance"))
+    ipv4_distance = models.FloatField(blank=True, null=True, verbose_name=_("IPv4 distance"))
+    ipv6_distance = models.FloatField(blank=True, null=True, verbose_name=_("IPv6 distance"))
+    mutual_distance = models.FloatField(blank=True, null=True, verbose_name=_("mutual distance"))
     created = models.DateTimeField(auto_now_add=True, verbose_name=_("created"))
 
     # Manager
@@ -107,17 +106,6 @@ class Measurement(models.Model):
     @property
     def hashid(self):
         return self.hashids.encode(self.id)
-
-    def get_ipv4_dis(self):
-        return self.get_distance(self.node.location, field_name='ipv4_location')
-
-    @cached_property
-    def distance_ipv6(self):
-        return self.get_distance(self.node.location, field_name='ipv6_location')
-
-    @cached_property
-    def distance_ipv4_ipv6(self):
-        return self.get_distance(self.ipv4_location, field_name='ipv6_location')
 
     def calculate_distances(self):
         queryset = Measurement.objects.filter(pk=self.pk)

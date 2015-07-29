@@ -40,7 +40,7 @@ class MeasurementAdmin(OSMGeoAdmin):
         }),
         (_("Measurement data"), {
             'classes': 'collapse',
-            'fields': ('ipv4_location', 'ipv6_location'),
+            'fields': ('ipv4_location', 'ipv6_location', 'ipv4_distance', 'ipv6_distance', 'mutual_distance'),
         }),
         (_("Advanced options"), {
             'classes': 'collapse',
