@@ -44,6 +44,7 @@ def perform_measurement(dataset_id, database_id, node_id):
         )
     )
     measurement.calculate_distances()
+    measurement.save()
 
     return measurement.pk
 

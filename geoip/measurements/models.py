@@ -50,7 +50,7 @@ class Dataset(models.Model):
     def __str__(self):
         return "{identifier:s} ({date:s})".format(
             identifier=self.hashid,
-            date=self.start.strftime('%Y-%m-%d'),
+            date=(self.start.strftime('%Y-%m-%d') if self.start else ''),
         )
 
     @property
