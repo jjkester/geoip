@@ -23,28 +23,32 @@ class IP2Location(GeoIPInterface):
     license = "This product includes IP2Location LITE data available from" \
               "<a href=\"http://www.ip2location.com\">http://www.ip2location.com</a>."
 
-    def __init__(self):
-        super().__init__()
-        self._reader = self._get_reader()
-
     def get_version(self):
-        return datetime(year=self._reader._dbyear + 2000, month=self._reader._dbmonth,
-                        day=self._reader._dbday).strftime('%Y-%m-%d')
+        reader = self._get_reader_v4()
+        return datetime(year=reader._dbyear + 2000, month=reader._dbmonth,
+                        day=reader._dbday).strftime('%Y-%m-%d')
 
     def query_v4(self, address: ipaddress.IPv4Address) -> Point:
-        return self._query(str(address))
+        reader = self._get_reader_v4()
+        result = reader.get_all(str(address))
+
+        if result:
+            return Point(result.latitude, result.longitude)
+        return None
 
     def query_v6(self, address: ipaddress.IPv6Address) -> Point:
-        return self._query(str(address))
+        reader = self._get_reader_v6()
+        result = reader.get_all(str(address))
 
-    def _query(self, address: str) -> Point:
-        result = self._reader.get_all(address)
-        return Point(result.latitude, result.longitude)
+        if result:
+            return Point(result.latitude, result.longitude)
+        return None
 
-    def _get_reader(self):
-        reader = IP2LocationReader()
-        reader.open(self._get_file('ip2location/IP2LOCATION-LITE-DB5.BIN'))
-        return reader
+    def _get_reader_v4(self):
+        return IP2LocationReader(self._get_file('ip2location/IP2LOCATION-LITE-DB5.BIN'))
+
+    def _get_reader_v6(self):
+        return IP2LocationReader(self._get_file('ip2location/IP2LOCATION-LITE-DB5.IPV6.BIN'))
 
 
 interface = IP2Location

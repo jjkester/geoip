@@ -1,2 +1,2 @@
 geoip2
-IP2Location
+IP2Location==python-7.0.0
