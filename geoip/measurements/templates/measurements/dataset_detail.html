@@ -7,6 +7,9 @@
       <div class="btn-group">
         <a href="{% url 'measurements:dataset_list' %}" class="btn btn-default"><i class="glyphicon glyphicon-menu-left"></i> {% trans "Back to list" %}</a>
       </div>
+      <div class="btn-group">
+        <a href="{% url 'measurements:dataset_export' hashid=dataset.hashid %}" class="btn btn-default"><i class="glyphicon glyphicon-download"></i> {% trans "Export CSV" %}</a>
+      </div>
       {% if user.is_staff %}
         <div class="btn-group">
           <button class="btn btn-warning disabled"><i class="glyphicon glyphicon-flash"></i> {% trans "Admin" %}</button>
