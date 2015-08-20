@@ -156,6 +156,34 @@
       </tbody>
     </table>
 
+    <h3>Answer counts</h3>
+    <p>The table below shows the answer rates for each database. The error rate is the percentage of all measurements which did not provide a complete result.</p>
+
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>&nbsp;</th>
+          <th class="text-center">Complete measurements</th>
+          <th class="text-center">Incomplete measurements</th>
+          <th class="text-center">Only IPv4</th>
+          <th class="text-center">Only IPv6</th>
+          <th class="text-center">Error rate</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for result in database_results.counts %}
+          <tr>
+            <th>{{ result.database.name }}</th>
+            <td class="text-center">{{ result.complete }}</td>
+            <td class="text-center">{{ result.incomplete }}</td>
+            <td class="text-center">{{ result.only_v4 }}</td>
+            <td class="text-center">{{ result.only_v6 }}</td>
+            <td class="text-center">{% widthratio result.incomplete result.all 100 %}%</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
     <hr>
 
     <p class="small text-muted">

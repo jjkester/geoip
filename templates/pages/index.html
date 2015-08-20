@@ -26,18 +26,10 @@
           <div class="panel-footer">{% blocktrans %}Historical measurements{% endblocktrans %}</div>
         </div>
       </div>
-      <div class="col-sm-6 col-md-3">
+      <div class="col-sm-12 col-md-6">
         <div class="panel panel-primary text-center">
           <div class="panel-body">
-            <p class="h2">{{ statistics.best_score|floatformat|default:'0' }}%</p>
-          </div>
-          <div class="panel-footer">{% blocktrans %}Best score{% endblocktrans %}</div>
-        </div>
-      </div>
-      <div class="col-sm-6 col-md-3">
-        <div class="panel panel-primary text-center">
-          <div class="panel-body">
-            <p class="h2">{{ statistics.last_measurement.created|timesince|default:'&mdash;' }}</p>
+            <p class="h2">{{ statistics.last_measurement.created|timesince|default:'&mdash;' }} {% trans "ago" %}</p>
           </div>
           <div class="panel-footer">{% blocktrans %}Last measurement{% endblocktrans %}</div>
         </div>

@@ -1,7 +1,7 @@
 """
 Views for the GeoIP measurements app.
 """
-from django.db.models import Count, F, Avg
+from django.db.models import Count, F, Avg, Q
 from django.views.generic import ListView, DetailView
 from geoip.contrib.views import HashidsSingleObjectMixin
 from geoip.databases.models import Database
@@ -56,6 +56,7 @@ class DatasetDetailView(HashidsSingleObjectMixin, DetailView):
 
         averages = []
         ranges = []
+        counts = []
 
         for database in databases:
             aggregates = self.object.measurements.filter(database=database).exclude(ipv4_distance=None)\
@@ -74,10 +75,19 @@ class DatasetDetailView(HashidsSingleObjectMixin, DetailView):
                 'v6': {point: query_v6(database, point) for point in measurement_points},
                 'total': self.object.measurements.count(),
             })
+            counts.append({
+                'database': database,
+                'all': self.object.measurements.filter(database=database).count(),
+                'complete': self.object.measurements.filter(database=database).exclude(ipv4_location=None).exclude(ipv6_location=None).count(),
+                'incomplete': self.object.measurements.filter(database=database).filter(Q(ipv4_location=None) | Q(ipv6_location=None)).count(),
+                'only_v6': self.object.measurements.filter(database=database).exclude(ipv6_location=None).filter(ipv4_location=None).count(),
+                'only_v4': self.object.measurements.filter(database=database).exclude(ipv4_location=None).filter(ipv6_location=None).count(),
+            })
 
         return {
             'averages': averages,
             'ranges': ranges,
+            'counts': counts,
         }
 
 

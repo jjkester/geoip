@@ -21,7 +21,6 @@ class HomepageView(TemplateView):
         return {
             'node_count': Node.objects.active().usable().count(),
             'dataset_count': Dataset.objects.all().count(),
-            'best_score': None,
             'last_measurement': Measurement.objects.order_by('created').last(),
         }
 
