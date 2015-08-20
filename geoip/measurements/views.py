@@ -15,7 +15,7 @@ class DatasetListView(ListView):
     """
     Lists completed datasets.
     """
-    queryset = Dataset.objects.public().completed()\
+    queryset = Dataset.objects.public().completed().order_by('-end')\
         .annotate(nodes__count=Count('measurements__node', distinct=True))\
         .annotate(databases__count=Count('measurements__database', distinct=True))
     context_object_name = 'datasets'
