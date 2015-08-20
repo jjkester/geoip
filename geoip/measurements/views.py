@@ -58,7 +58,7 @@ class DatasetDetailView(HashidsSingleObjectMixin, DetailView):
         ranges = []
 
         for database in databases:
-            aggregates = self.object.measurements.exclude(ipv4_distance=None)\
+            aggregates = self.object.measurements.filter(database=database).exclude(ipv4_distance=None)\
                 .aggregate(
                     accuracy_ipv4=Avg('ipv4_distance'),
                     accuracy_ipv6=Avg('ipv6_distance'),
