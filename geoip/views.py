@@ -30,3 +30,10 @@ class AboutView(TemplateView):
     About page of the public site.
     """
     template_name = 'pages/about.html'
+
+
+class LegalView(TemplateView):
+    """
+    Legal page of the public site.
+    """
+    template_name = 'pages/legal.html'
