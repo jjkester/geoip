@@ -8,6 +8,15 @@
         <div class="page-header">
           <h1>{% blocktrans %}Legal{% endblocktrans %}</h1>
         </div>
+        {# TODO Add license #}
+        <hr>
+        <h3>Third party databases</h3>
+        <dl>
+          {% for database in databases %}
+            <dt>{{ database.name }}</dt>
+            <dd>{{ database.notes|safe }}</dd>
+          {% endfor %}
+        </dl>
       </div>
     </div>
   </div>

@@ -2,6 +2,7 @@
 General views for the GeoIP application.
 """
 from django.views.generic import TemplateView
+from geoip.databases.models import Database
 from geoip.measurements.models import Dataset, Measurement
 from geoip.nodes.models import Node
 
@@ -37,3 +38,8 @@ class LegalView(TemplateView):
     Legal page of the public site.
     """
     template_name = 'pages/legal.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(LegalView, self).get_context_data()
+        context['databases'] = Database.objects.all()
+        return context
