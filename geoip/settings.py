@@ -48,7 +48,6 @@ INSTALLED_APPS = (
     'geoip.nodes',
     'geoip.measurements',
     'geoip.scrapers',
-    'geoip.statistics',
 )
 
 MIDDLEWARE_CLASSES = (

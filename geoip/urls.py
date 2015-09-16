@@ -25,7 +25,6 @@ urlpatterns = [
     url(r'^databases/', include('geoip.databases.urls', namespace='databases')),
     url(r'^nodes/', include('geoip.nodes.urls', namespace='nodes')),
     url(r'^measurements/', include('geoip.measurements.urls', namespace='measurements')),
-    url(r'^statistics/', include('geoip.statistics.urls', namespace='statistics')),
 
     url(r'^about/$', AboutView.as_view(), name='about'),
     url(r'^legal/$', LegalView.as_view(), name='legal'),
