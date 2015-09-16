@@ -50,7 +50,6 @@ DATABASES = {
 
 # Debugging
 DEBUG = str(os.getenv('GEOIP_DEBUG_MODE', False)).lower() == "true"
-TEMPLATE_DEBUG = DEBUG
 
 # Propagate exceptions
 DEBUG_PROPAGATE_EXCEPTIONS = False
@@ -264,7 +263,8 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ),
-        }
+            'debug': DEBUG,
+        },
     },
 ]
 
