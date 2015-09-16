@@ -39,7 +39,7 @@ DATABASES = {
         'USER': os.getenv('GEOIP_DB_USER'),
         'PASSWORD': os.getenv('GEOIP_DB_PASSWORD'),
         'HOST': os.getenv('GEOIP_DB_HOST', 'localhost'),
-        'PORT': os.getenv('GEOIP_DB_PORT', '5423'),
+        'PORT': os.getenv('GEOIP_DB_PORT', '5432'),
     }
 }
 
