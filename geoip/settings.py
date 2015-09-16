@@ -49,7 +49,7 @@ DATABASES = {
 #############
 
 # Debugging
-DEBUG = str(os.getenv('GEOIP_DEBUG_MODE', False)).lower() is "true"
+DEBUG = str(os.getenv('GEOIP_DEBUG_MODE', False)).lower() == "true"
 TEMPLATE_DEBUG = DEBUG
 
 # Propagate exceptions
