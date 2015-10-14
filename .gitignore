@@ -65,4 +65,4 @@ target/
 geoip/local_settings.py
 
 # Binary databases
-databases/
+/databases/
