@@ -287,3 +287,4 @@ ROOT_URLCONF = 'geoip.urls'
 
 # Celery
 CELERY_RESULT_BACKEND = 'djcelery.backends.database:DatabaseBackend'
+CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
