@@ -23,7 +23,7 @@ class Database(models.Model):
     """
     Represents a GeoIP database that is queried by the GeoIP application.
     """
-    codename = models.CharField(max_length=255, unique=True, validators=[validate_slug], verbose_name=_("code name"))
+    codename = models.CharField(max_length=255, validators=[validate_slug], verbose_name=_("code name"))
     name = models.CharField(max_length=255, verbose_name=_("name"))
     version = models.CharField(max_length=255, verbose_name=_("version"))
     url = models.URLField(blank=True, verbose_name=_("website"))
@@ -38,6 +38,7 @@ class Database(models.Model):
 
     class Meta:
         ordering = ['-is_active', 'name']
+        unique_together = [['codename', 'version']]
         verbose_name = _("GeoIP database")
         verbose_name_plural = _("GeoIP databases")
 

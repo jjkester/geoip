@@ -15,7 +15,7 @@ class DatabaseListView(ListView):
     """
     Lists active databases.
     """
-    queryset = Database.objects.all()
+    queryset = Database.objects.active()
     context_object_name = 'databases'
 
 

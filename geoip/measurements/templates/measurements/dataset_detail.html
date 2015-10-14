@@ -113,7 +113,7 @@
       <tbody>
         {% for result in database_results.averages %}
           <tr>
-            <th>{{ result.database.name }}</th>
+            <th>{{ result.database.name }} <small class="text-muted">{{ result.database.version }}</small></th>
             <td class="text-center">{{ result.accuracy_ipv4|floatformat }} km</td>
             <td class="text-center">{{ result.accuracy_ipv6|floatformat }} km</td>
             <td class="text-center">{{ result.accuracy_difference|floatformat }} km</td>
@@ -139,7 +139,7 @@
       <tbody>
         {% for result in database_results.ranges %}
           <tr>
-            <th rowspan="2" style="vertical-align: middle;">{{ result.database.name }}</th>
+            <th rowspan="2" style="vertical-align: middle;">{{ result.database.name }} <small class="text-muted">{{ result.database.version }}</small></th>
             <th class="text-right">IPv4</th>
             <td class="text-center">{% widthratio result.v4.1 result.total 100 %}%</td>
             <td class="text-center">{% widthratio result.v4.10 result.total 100 %}%</td>
@@ -176,7 +176,7 @@
       <tbody>
         {% for result in database_results.counts %}
           <tr>
-            <th>{{ result.database.name }}</th>
+            <th>{{ result.database.name }} <small class="text-muted">{{ result.database.version }}</small></th>
             <td class="text-center">{{ result.complete }}</td>
             <td class="text-center">{{ result.incomplete }}</td>
             <td class="text-center">{{ result.only_v4 }}</td>

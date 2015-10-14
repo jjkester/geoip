@@ -21,9 +21,9 @@ class Command(LabelCommand):
 
         obj, created = Database.objects.update_or_create(
             codename=interface.codename,
+            version=interface.get_version(),
             defaults=dict(
                 name=interface.name,
-                version=interface.get_version(),
                 url=interface.url,
                 notes=interface.license,
             ),
