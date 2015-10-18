@@ -27,18 +27,22 @@
           opacity: 1,
           clickable: false
         }).addTo(map);
+        {% if measurement.ipv4_location %}
         var ipv4marker = L.circleMarker([{{ measurement.ipv4_location.0 }}, {{ measurement.ipv4_location.1 }}], {
           color: '#f39c12',
           opacity: 1,
           clickable: false
         }).addTo(map);
+        {% endif %}
+        {% if measurement.ipv6_location %}
         var ipv6marker = L.circleMarker([{{ measurement.ipv6_location.0 }}, {{ measurement.ipv6_location.1 }}], {
           color: '#f39c12',
           opacity: 1,
           clickable: false
         }).addTo(map);
+        {% endif %}
 
-        var group = new L.featureGroup([nodemarker, ipv4marker, ipv6marker]);
+        var group = new L.featureGroup([nodemarker{% if measurement.ipv4_location %}, ipv4marker{% endif %}{% if measurement.ipv6_location %}, ipv6marker{% endif %}]);
         map.fitBounds(group.getBounds());
       });
     });
@@ -66,7 +70,7 @@
     <header class="page-header">
       <h1>
         {% trans "Measurement" %}
-        <small>{{ measurement }}</small>
+        <small>{{ measurement.hashid }}</small>
       </h1>
     </header>
 
@@ -74,7 +78,9 @@
       <div class="col-sm-4">
         <div class="panel panel-default text-center">
           <div class="panel-body">
-            <p class="h3">{{ measurement.ipv4_distance|floatformat:'0' }} km</p>
+            <p class="h3">
+              {{ measurement.ipv4_distance|floatformat:'0'|default:'∞' }} km
+            </p>
           </div>
           <div class="panel-footer">{% trans "IPv4 accuracy" %}</div>
         </div>
@@ -82,7 +88,7 @@
       <div class="col-sm-4">
         <div class="panel panel-default text-center">
           <div class="panel-body">
-            <p class="h3">{{ measurement.ipv6_distance|floatformat:'0' }} km</p>
+            <p class="h3">{{ measurement.ipv6_distance|floatformat:'0'|default:'∞' }} km</p>
           </div>
           <div class="panel-footer">{% trans "IPv6 accuracy" %}</div>
         </div>
@@ -90,7 +96,7 @@
       <div class="col-sm-4">
         <div class="panel panel-default text-center">
           <div class="panel-body">
-            <p class="h3">{{ measurement.mutual_distance|floatformat:'0' }} km</p>
+            <p class="h3">{{ measurement.mutual_distance|floatformat:'0'|default:'∞' }} km</p>
           </div>
           <div class="panel-footer">{% trans "IPv4 - IPv6 difference" %}</div>
         </div>
@@ -119,25 +125,39 @@
 
     <h2>
       {% trans "Database" %}
-      <small>{{ measurement.database.name }}</small>
+      <small>{{ measurement.database }}</small>
     </h2>
 
     <div class="row">
       <div class="col-sm-6">
         <h3>
           {% trans "IPv4 location" %}
-          <small>{{ measurement.ipv4_location.0 }}, {{ measurement.ipv4_location.1 }}</small>
+          {% if measurement.ipv4_location %}<small>{{ measurement.ipv4_location.0 }}, {{ measurement.ipv4_location.1 }}</small>{% endif %}
         </h3>
-        <div id="ipv4map" style="height: 400px;"></div>
-        {% include 'elements/map.html' with id='ipv4map' point=measurement.ipv4_location %}
+        {% if measurement.ipv4_location %}
+          <div id="ipv4map" style="height: 400px;"></div>
+          {% include 'elements/map.html' with id='ipv4map' point=measurement.ipv4_location %}
+        {% else %}
+          <div class="alert alert-warning">
+            <h4>Not found</h4>
+            <p>Database <strong>{{ measurement.database }}</strong> has no result for IP address <strong>{{ measurement.node.ipv4 }}</strong>.</p>
+          </div>
+        {% endif %}
       </div>
       <div class="col-sm-6">
         <h3>
           {% trans "IPv6 location" %}
-          <small>{{ measurement.ipv6_location.0 }}, {{ measurement.ipv6_location.1 }}</small>
+          {% if measurement.ipv6_location %}<small>{{ measurement.ipv6_location.0 }}, {{ measurement.ipv6_location.1 }}</small>{% endif %}
         </h3>
-        <div id="ipv6map" style="height: 400px;"></div>
-        {% include 'elements/map.html' with id='ipv6map' point=measurement.ipv6_location %}
+        {% if measurement.ipv6_location %}
+          <div id="ipv6map" style="height: 400px;"></div>
+          {% include 'elements/map.html' with id='ipv6map' point=measurement.ipv6_location %}
+        {% else %}
+          <div class="alert alert-warning">
+            <h4>Not found</h4>
+            <p>Database <strong>{{ measurement.database }}</strong> has no result for IP address <strong>{{ measurement.node.ipv6 }}</strong>.</p>
+          </div>
+        {% endif %}
       </div>
     </div>
 

@@ -46,7 +46,7 @@
             <div class="panel-body">
               <h4>{{ source.name }}</h4>
               <p>{{ source.url|urlize }}</p>
-              <p><strong>{{ source.nodes.count }} {% trans "nodes" %}</strong></p>
+              <p><strong>{{ source.nodes.count }} {% trans "nodes" %}</strong> <small>(updated {{ source.nodes.latest.last_updated|date:'Y-m-d' }})</small></p>
             </div>
           </div>
         </div>

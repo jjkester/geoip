@@ -43,6 +43,7 @@ class Node(models.Model):
     hashids = Hashids(salt='N0d3', min_length=5)
 
     class Meta:
+        get_latest_by = 'last_updated'
         ordering = ['created']
         verbose_name = _("node")
         verbose_name_plural = _("nodes")

@@ -28,7 +28,7 @@ class DatabaseDetailView(HashidsSingleObjectMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(DatabaseDetailView, self).get_context_data(**kwargs)
-        context['datasets'] = Dataset.objects.public().completed().filter(measurements__database=self.object)
+        context['datasets'] = Dataset.objects.public().completed().filter(measurements__database=self.object).distinct()
         return context
 
 
