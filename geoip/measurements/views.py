@@ -123,10 +123,10 @@ class DatasetExportView(HashidsSingleObjectMixin, DetailView):
 
         if content is None or content is False:
             if content is None:
-                cache.set(cache_key, False)
+                cache.set(cache_key, False, None)
                 prepare_csv_export = chain(
                     dataset_as_csv.s(self.object.pk),
-                    set_cache.s(cache_name=cache_name, key=cache_key, timeout=3600)
+                    set_cache.s(cache_name=cache_name, key=cache_key, timeout=86400)
                 )
                 prepare_csv_export()
             response = super(DatasetExportView, self).get(request, *args, **kwargs)
