@@ -21,7 +21,7 @@ class HomepageView(TemplateView):
     def get_statistics(self):
         return {
             'node_count': Node.objects.active().usable().count(),
-            'dataset_count': Dataset.objects.all().count(),
+            'dataset_count': Dataset.objects.public().completed().count(),
             'last_measurement': Dataset.objects.public().completed().latest('end'),
         }
 
