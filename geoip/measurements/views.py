@@ -1,14 +1,15 @@
 """
 Views for the GeoIP measurements app.
 """
-import csv
+from celery import chain
+from django.core.cache import caches
 from django.db.models import Count, Avg, Q
 from django.http import HttpResponse
-from django.views.generic import ListView, DetailView, View
-from django.views.generic.detail import SingleObjectMixin
+from django.views.generic import ListView, DetailView
 from geoip.contrib.views import HashidsSingleObjectMixin
 from geoip.databases.models import Database
 from geoip.measurements.models import Dataset, Measurement
+from geoip.measurements.tasks import dataset_as_csv, set_cache
 
 
 class DatasetListView(ListView):
@@ -102,60 +103,35 @@ class MeasurementDetailView(HashidsSingleObjectMixin, DetailView):
     context_object_name = 'measurement'
 
 
-class DatasetExportView(HashidsSingleObjectMixin, SingleObjectMixin, View):
+class DatasetExportView(HashidsSingleObjectMixin, DetailView):
     """
     Exports a dataset as CSV file.
     """
-    queryset = Dataset.objects.public().completed().prefetch_related('measurements', 'measurements__node')
-
-    def get_csv_data(self):
-        def format_location(point):
-            if point:
-                return point.x, point.y
-            return None
-
-        data = []
-
-        data.append((
-            "ID",
-            "Database ID",
-            "Node ID",
-            "IPv4 address",
-            "IPv6 address",
-            "Location",
-            "IPv4 location",
-            "IPv6 location",
-            "IPv4 distance",
-            "IPv6 distance",
-            "Mutual distance",
-        ))
-
-        for measurement in self.object.measurements.all():
-            data.append((
-                measurement.hashid,
-                measurement.database.hashid,
-                measurement.node.hashid,
-                measurement.node.ipv4 or '',
-                measurement.node.ipv6 or '',
-                format_location(measurement.node.location) or '',
-                format_location(measurement.ipv4_location) or '',
-                format_location(measurement.ipv6_location) or '',
-                measurement.ipv4_distance or '',
-                measurement.ipv6_distance or '',
-                measurement.mutual_distance or '',
-            ))
-
-        return data
+    queryset = Dataset.objects.public().completed()
+    template_name_suffix = '_export'
+    context_object_name = 'dataset'
 
     def get(self, request, *args, **kwargs):
         self.object = self.get_object()
 
-        response = HttpResponse(content_type='text/csv')
-        response['Content-Disposition'] = 'attachment; filename="%s.csv"' % self.object.hashid
+        cache_name = 'filesystem'
+        cache_key = 'dataset_%s_csv' % self.object.hashid
 
-        writer = csv.writer(response)
+        cache = caches[cache_name]
 
-        for row in self.get_csv_data():
-            writer.writerow(row)
+        content = cache.get(cache_key)
+
+        if content is None or content is False:
+            if content is None:
+                cache.set(cache_key, False)
+                prepare_csv_export = chain(
+                    dataset_as_csv.s(self.object.pk),
+                    set_cache.s(cache_name=cache_name, key=cache_key, timeout=3600)
+                )
+                prepare_csv_export()
+            response = super(DatasetExportView, self).get(request, *args, **kwargs)
+        else:
+            response = HttpResponse(content, content_type='text/csv')
+            response['Content-Disposition'] = 'attachment; filename="%s.csv"' % self.object.hashid
 
         return response

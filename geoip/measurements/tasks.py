@@ -1,8 +1,11 @@
 """
 Tasks for the GeoIP measurements app.
 """
+import csv
+import io
 import logging
 from celery import task
+from django.core.cache import caches
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import transaction
 from django.utils import timezone
@@ -74,3 +77,61 @@ def dataset_post_measurement(result, dataset_id):
     dataset.end = timezone.now()
     dataset.save()
     return dataset.pk
+
+
+@task()
+def dataset_as_csv(dataset_id):
+    dataset = Dataset.objects.prefetch_related('measurements', 'measurements__node').get(pk=dataset_id)
+
+    def format_location(point):
+        if point:
+            return point.x, point.y
+        return None
+
+    csv_data = []
+
+    csv_data.append((
+        "ID",
+        "Database ID",
+        "Node ID",
+        "IPv4 address",
+        "IPv6 address",
+        "Location",
+        "IPv4 location",
+        "IPv6 location",
+        "IPv4 distance",
+        "IPv6 distance",
+        "Mutual distance",
+    ))
+
+    for measurement in dataset.measurements.all():
+        csv_data.append((
+            measurement.hashid,
+            measurement.database.hashid,
+            measurement.node.hashid,
+            measurement.node.ipv4 or '',
+            measurement.node.ipv6 or '',
+            format_location(measurement.node.location) or '',
+            format_location(measurement.ipv4_location) or '',
+            format_location(measurement.ipv6_location) or '',
+            measurement.ipv4_distance or '',
+            measurement.ipv6_distance or '',
+            measurement.mutual_distance or '',
+        ))
+
+    output = io.StringIO()
+    writer = csv.writer(output)
+
+    for row in csv_data:
+        writer.writerow(row)
+
+    return output.getvalue()
+
+
+@task()
+def set_cache(data, cache_name, key, timeout=-1):
+    cache = caches[cache_name]
+    if timeout >= 0:
+        cache.set(key, data, timeout)
+    else:
+        cache.set(key, data)

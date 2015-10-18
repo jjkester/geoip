@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block page_title %}{% blocktrans %}Data set {{ dataset }}{% endblocktrans %}{% endblock %}
+{% block content %}
+  <section class="container">
+    <nav class="toolbar">
+      <div class="btn-group">
+        <a href="{% url 'measurements:dataset_detail' hashid=dataset.hashid %}" class="btn btn-default"><i class="glyphicon glyphicon-menu-left"></i> {% trans "Back to data set" %}</a>
+      </div>
+      {% if user.is_staff %}
+        <div class="btn-group">
+          <button class="btn btn-warning disabled"><i class="glyphicon glyphicon-flash"></i> {% trans "Admin" %}</button>
+          <a href="{% url 'admin:measurements_dataset_change' dataset.pk %}" class="btn btn-warning"><i class="glyphicon glyphicon-pencil"></i> {% trans "Edit" %} {% trans "data set" %}</a>
+          <a href="{% url 'admin:measurements_dataset_delete' dataset.pk %}" class="btn btn-warning"><i class="glyphicon glyphicon-trash"></i> {% trans "Delete" %} {% trans "data set" %}</a>
+        </div>
+      {% endif %}
+    </nav>
+
+    <header class="page-header">
+      <h1>
+        {% trans "Data set" %}
+        <small>{{ dataset }}</small>
+      </h1>
+    </header>
+
+    <div class="well text-center">
+      <h2>{% blocktrans %}Your download is being prepared.{% endblocktrans %}</h2>
+      <p>
+        Generating a CSV export can take a long time. Please click the button below to check if your download is ready.<br>
+        You will see this page again if your download is not ready yet.
+      </p>
+      <hr>
+      <p>
+        <a href="" class="btn btn-primary">
+          <i class="glyphicon glyphicon-refresh"></i>
+          Check download
+        </a>
+      </p>
+    </div>
+
+  </section>
+{% endblock %}
