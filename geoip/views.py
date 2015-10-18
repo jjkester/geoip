@@ -22,7 +22,7 @@ class HomepageView(TemplateView):
         return {
             'node_count': Node.objects.active().usable().count(),
             'dataset_count': Dataset.objects.all().count(),
-            'last_measurement': Measurement.objects.order_by('created').last(),
+            'last_measurement': Dataset.objects.public().completed().latest('end'),
         }
 
 
