@@ -29,6 +29,10 @@ class Command(LabelCommand):
             ),
         )
 
+        # Deactivate other versions on creation
+        if created and obj.is_active:
+            Database.objects.filter(codename=interface.codename).exclude(pk=obj.pk).update(is_active=False)
+
         self.stdout.write("Initialized %s:" % label)
         self.stdout.write("  - Name: {name:s}\n  - Current version: {version:s}".format(name=obj.name,
                                                                                         version=obj.version))
