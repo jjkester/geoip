@@ -20,7 +20,7 @@ class IP2Location(GeoIPInterface):
     name = "IP2Location DB5.LITE"
     codename = "ip2location"
     url = "http://lite.ip2location.com/database-ip-country-region-city-latitude-longitude"
-    license = "This product includes IP2Location LITE data available from" \
+    license = "This product includes IP2Location LITE data available from " \
               "<a href=\"http://www.ip2location.com\">http://www.ip2location.com</a>."
 
     def get_version(self):
