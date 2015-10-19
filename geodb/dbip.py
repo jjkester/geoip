@@ -77,6 +77,7 @@ class DBIP(GeoIPInterface):
                            "longitude REAL NOT NULL,"
                            "timezone_offset REAL NOT NULL,"
                            "timezone_name TEXT NOT NULL);")
+            cursor.execute("CREATE INDEX index_ip_start_ip_end ON location (ip_start, ip_end);")
             conn.commit()
 
             # Import csv
