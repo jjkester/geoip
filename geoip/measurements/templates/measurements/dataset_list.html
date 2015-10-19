@@ -1,5 +1,11 @@
 {% extends 'base.html' %}
 {% load i18n %}
+{% block jumbotron %}
+  <div class="container">
+    <h1>{% blocktrans %}Measurements{% endblocktrans %}</h1>
+    <p>{% blocktrans %}IP geolocation database performance in the real world{% endblocktrans %}</p>
+  </div>
+{% endblock %}
 {% block page_title %}{% blocktrans %}Measurement data sets{% endblocktrans %}{% endblock %}
 {% block content %}
   <section class="container">

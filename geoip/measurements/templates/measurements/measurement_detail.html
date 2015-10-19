@@ -55,8 +55,8 @@
         <a href="{% url 'measurements:dataset_detail' hashid=measurement.dataset.hashid %}" class="btn btn-default"><i class="glyphicon glyphicon-menu-left"></i> {% trans "Back to" %} {% trans "data set" %}</a>
       </div>
       <div class="btn-group">
-        <a href="{% url 'nodes:node_detail' hashid=measurement.node.hashid %}" class="btn btn-default"><i class="glyphicon glyphicon-hdd"></i> {% trans "Node details" %}</a>
-        <a href="{% url 'databases:database_detail' hashid=measurement.database.hashid %}" class="btn btn-default"><i class="glyphicon glyphicon-map-marker"></i> {% trans "Database details" %}</a>
+        <a href="{% url 'nodes:node_detail' hashid=measurement.node.hashid %}" class="btn btn-default"><i class="glyphicon glyphicon-map-marker"></i> {% trans "Node details" %}</a>
+        <a href="{% url 'databases:database_detail' hashid=measurement.database.hashid %}" class="btn btn-default"><i class="glyphicon glyphicon-hdd"></i> {% trans "Database details" %}</a>
       </div>
       {% if user.is_staff %}
         <div class="btn-group">

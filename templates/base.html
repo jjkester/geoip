@@ -10,6 +10,22 @@
   <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" />
   <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+  <style type="text/css">
+    @media (min-width: 768px) {
+      .navbar .navbar-nav {
+        display: inline-block;
+        float: none;
+        vertical-align: top;
+      }
+      .navbar .navbar-collapse {
+        display: block;
+        position: fixed;
+        left: 0;
+        right: 0;
+        text-align: center;
+      }
+    }
+  </style>
 </head>
 <body style="margin-top: 60px;">
 
@@ -26,23 +42,30 @@
       </a>
     </div>
     <div class="collapse navbar-collapse">
-      <ul class="nav navbar-nav navbar-left">
+      <ul class="nav navbar-nav">
         <li{% if request.resolver_match.namespaces.0 == 'databases' %} class="active"{% endif %}>
-          <a href="{% url 'databases:database_list' %}">{% trans "Databases" %}</a>
+          <a href="{% url 'databases:database_list' %}">
+            <i class="glyphicon glyphicon-hdd"></i>
+            {% trans "Databases" %}
+          </a>
         </li>
         <li{% if request.resolver_match.namespaces.0 == 'nodes' %} class="active"{% endif %}>
-          <a href="{% url 'nodes:index' %}">{% trans "Nodes" %}</a>
+          <a href="{% url 'nodes:index' %}">
+            <i class="glyphicon glyphicon-map-marker"></i>
+            {% trans "Nodes" %}
+          </a>
         </li>
         <li{% if request.resolver_match.namespaces.0 == 'measurements' %} class="active"{% endif %}>
-          <a href="{% url 'measurements:dataset_list' %}">{% trans "Measurements" %}</a>
+          <a href="{% url 'measurements:dataset_list' %}">
+            <i class="glyphicon glyphicon-stats"></i>
+            {% trans "Measurements" %}
+          </a>
         </li>
-        <li>
-          <a href="">{% trans "Statistics" %}</a>
-        </li>
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
         <li{% if request.resolver_match.namespaces|length_is:0 and request.resolver_match.url_name == 'about' %} class="active"{% endif %}>
-          <a href="{% url 'about' %}">{% trans "About" %}</a>
+          <a href="{% url 'about' %}">
+            <i class="glyphicon glyphicon-info-sign"></i>
+            {% trans "About" %}
+          </a>
         </li>
       </ul>
     </div>
