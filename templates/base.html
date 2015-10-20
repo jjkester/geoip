@@ -43,6 +43,12 @@
     </div>
     <div class="collapse navbar-collapse">
       <ul class="nav navbar-nav">
+        <li{% if request.resolver_match.namespaces|length_is:0 and request.resolver_match.url_name == 'home' %} class="active"{% endif %}>
+          <a href="{% url 'home' %}">
+            <i class="glyphicon glyphicon-home"></i>
+            {% trans "Home" %}
+          </a>
+        </li>
         <li{% if request.resolver_match.namespaces.0 == 'databases' %} class="active"{% endif %}>
           <a href="{% url 'databases:database_list' %}">
             <i class="glyphicon glyphicon-hdd"></i>
