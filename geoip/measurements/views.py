@@ -45,7 +45,7 @@ class DatasetDetailView(HashidsSingleObjectMixin, DetailView):
         context['databases'] = analysis.databases
         context['statistics'] = analysis.averages()
         context['database_results'] = {
-            'accuracies': analysis.database_accuracies([1, 10, 25, 50, 100, 250]),
+            'accuracies': analysis.database_accuracies([1, 10, 25, 50, 100, 250, 500, 1000]),
             'averages': analysis.database_averages(),
             'counts': analysis.database_counts(),
         }

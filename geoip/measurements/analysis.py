@@ -114,7 +114,7 @@ class DataSetAnalysis(object):
         return chart.render(disable_xml_declaration=for_embed)
 
     def database_accuracies_chart(self, for_embed=True):
-        points = range(0, 1000, 10)
+        points = range(0, 1001, 10)
 
         data = self.database_accuracies(points)
 
