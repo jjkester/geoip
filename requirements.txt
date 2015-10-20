@@ -2,6 +2,7 @@ Django >= 1.8 , < 1.9
 django-celery
 django-bootstrap-form
 hashids
+pygal
 psycopg2
 requests
 

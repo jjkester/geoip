@@ -2,6 +2,7 @@
 {% load i18n %}
 {% block page_title %}{% blocktrans %}Data set {{ dataset }}{% endblocktrans %}{% endblock %}
 {% block content %}
+  <script type="text/javascript" src="http://kozea.github.com/pygal.js/latest/pygal-tooltips.min.js"></script>
   <section class="container">
     <nav class="toolbar">
       <div class="btn-group">
@@ -98,7 +99,13 @@
 
     <h2>Comparison grids</h2>
 
-    <h3>Averages</h3>
+    <h3>
+      Averages
+      <button type="button" class="btn btn-link" data-toggle="modal" data-target="#modal-chart-averages">
+        <i class="glyphicon glyphicon-stats"></i>
+        Show chart
+      </button>
+    </h3>
     <p>The table below contains the average accuracy for each database.</p>
 
     <table class="table table-bordered">
@@ -122,44 +129,50 @@
       </tbody>
     </table>
 
-    <h3>Range accuracy</h3>
+    <h3>
+      Range accuracy
+      <button type="button" class="btn btn-link" data-toggle="modal" data-target="#modal-chart-accuracies">
+        <i class="glyphicon glyphicon-stats"></i>
+        Show chart
+      </button>
+    </h3>
     <p>The table below contains the accuracy of each database for a number of fixed distances from the original location.</p>
 
     <table class="table table-bordered">
       <thead>
         <tr>
           <th colspan="2">&nbsp;</th>
-          <th class="text-center">&lt; 1 km</th>
-          <th class="text-center">&lt; 10 km</th>
-          <th class="text-center">&lt; 25 km</th>
-          <th class="text-center">&lt; 100 km</th>
-          <th class="text-center">&lt; 250 km</th>
+          {% for point in database_results.accuracies.0.points %}
+            <th class="text-center">&lt; {{ point }} km</th>
+          {% endfor %}
         </tr>
       </thead>
       <tbody>
-        {% for result in database_results.ranges %}
+        {% for result in database_results.accuracies %}
           <tr>
             <th rowspan="2" style="vertical-align: middle;">{{ result.database.name }} <small class="text-muted">{{ result.database.version }}</small></th>
             <th class="text-right">IPv4</th>
-            <td class="text-center">{% widthratio result.v4.1 result.total 100 %}%</td>
-            <td class="text-center">{% widthratio result.v4.10 result.total 100 %}%</td>
-            <td class="text-center">{% widthratio result.v4.25 result.total 100 %}%</td>
-            <td class="text-center">{% widthratio result.v4.100 result.total 100 %}%</td>
-            <td class="text-center">{% widthratio result.v4.250 result.total 100 %}%</td>
+            {% for point in result.ipv4 %}
+              <td class="text-center">{% widthratio point result.total 100 %}%</td>
+            {% endfor %}
           </tr>
           <tr>
             <th class="text-right">IPv6</th>
-            <td class="text-center">{% widthratio result.v6.1 result.total 100 %}%</td>
-            <td class="text-center">{% widthratio result.v6.10 result.total 100 %}%</td>
-            <td class="text-center">{% widthratio result.v6.25 result.total 100 %}%</td>
-            <td class="text-center">{% widthratio result.v6.100 result.total 100 %}%</td>
-            <td class="text-center">{% widthratio result.v6.250 result.total 100 %}%</td>
+            {% for point in result.ipv6 %}
+              <td class="text-center">{% widthratio point result.total 100 %}%</td>
+            {% endfor %}
           </tr>
         {% endfor %}
       </tbody>
     </table>
 
-    <h3>Answer counts</h3>
+    <h3>
+      Answer counts
+      <button type="button" class="btn btn-link" data-toggle="modal" data-target="#modal-chart-counts">
+        <i class="glyphicon glyphicon-stats"></i>
+        Show chart
+      </button>
+    </h3>
     <p>The table below shows the answer rates for each database. The error rate is the percentage of all measurements which did not provide a complete result.</p>
 
     <table class="table table-bordered">
@@ -197,4 +210,50 @@
     </p>
 
   </section>
+
+  <div class="modal fade" id="modal-chart-accuracies">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
+          <h4 class="modal-title">Database accuracy</h4>
+        </div>
+        <div class="modal-body">
+          <figure class="image-responsive">
+            <embed type="image/svg+xml" src="{% url 'measurements:dataset_chart' hashid=dataset.hashid method='database_accuracies' %}"></embed>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="modal-chart-averages">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
+          <h4 class="modal-title">Average result deviation</h4>
+        </div>
+        <div class="modal-body">
+          <figure class="image-responsive">
+            <embed type="image/svg+xml" src="{% url 'measurements:dataset_chart' hashid=dataset.hashid method='database_averages' %}"></embed>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="modal-chart-counts">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
+          <h4 class="modal-title">Database measurement counts</h4>
+        </div>
+        <div class="modal-body">
+          <figure class="image-responsive">
+            <embed type="image/svg+xml" src="{% url 'measurements:dataset_chart' hashid=dataset.hashid method='database_counts' %}"></embed>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </div>
 {% endblock %}

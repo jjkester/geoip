@@ -3,11 +3,12 @@ Views for the GeoIP measurements app.
 """
 from celery import chain
 from django.core.cache import caches
-from django.db.models import Count, Avg, Q
-from django.http import HttpResponse
+from django.db.models import Count
+from django.http import HttpResponse, Http404
+from django.views.decorators.cache import cache_page
 from django.views.generic import ListView, DetailView
 from geoip.contrib.views import HashidsSingleObjectMixin
-from geoip.databases.models import Database
+from geoip.measurements.analysis import DataSetAnalysis
 from geoip.measurements.models import Dataset, Measurement
 from geoip.measurements.tasks import dataset_as_csv, set_cache
 
@@ -38,61 +39,39 @@ class DatasetDetailView(HashidsSingleObjectMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(DatasetDetailView, self).get_context_data(**kwargs)
-        context['databases'] = Database.objects.filter(measurements__dataset=self.object).distinct()
-        context['statistics'] = self.get_statistics()
-        context['database_results'] = self.get_database_results()
+
+        analysis = DataSetAnalysis(self.object)
+
+        context['databases'] = analysis.databases
+        context['statistics'] = analysis.averages()
+        context['database_results'] = {
+            'accuracies': analysis.database_accuracies([1, 10, 25, 50, 100, 250]),
+            'averages': analysis.database_averages(),
+            'counts': analysis.database_counts(),
+        }
+
         return context
 
-    def get_statistics(self):
-        aggregates = self.object.measurements.all()\
-            .aggregate(
-                accuracy_ipv4=Avg('ipv4_distance'),
-                accuracy_ipv6=Avg('ipv6_distance'),
-                accuracy_difference=Avg('mutual_distance'),
+
+class DatasetChartView(HashidsSingleObjectMixin, DetailView):
+    """
+    Shows a single SVG chart.
+    """
+    queryset = Dataset.objects.public().completed()
+    content_type = 'image/svg+xml'
+
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        analysis = DataSetAnalysis(self.object)
+        try:
+            chart_method = '%s_chart' % self.kwargs['method']
+            content = getattr(analysis, chart_method)()
+        except AttributeError:
+            raise Http404("No chart named %s." % chart_method)
+        return HttpResponse(
+                content=content,
+                content_type=self.content_type,
             )
-        return aggregates
-
-    def get_database_results(self):
-        measurement_points = [1, 10, 25, 100, 250]
-        query_v4 = lambda d, p:  self.object.measurements.exclude(ipv4_distance=None).filter(database=d, ipv4_distance__lte=p).count()
-        query_v6 = lambda d, p:  self.object.measurements.exclude(ipv6_distance=None).filter(database=d, ipv6_distance__lte=p).count()
-        databases = Database.objects.filter(measurements__dataset=self.object).distinct()
-
-        averages = []
-        ranges = []
-        counts = []
-
-        for database in databases:
-            aggregates = self.object.measurements.filter(database=database).exclude(ipv4_distance=None)\
-                .aggregate(
-                    accuracy_ipv4=Avg('ipv4_distance'),
-                    accuracy_ipv6=Avg('ipv6_distance'),
-                    accuracy_difference=Avg('mutual_distance'),
-                )
-            averages.append(dict(
-                database=database,
-                **aggregates
-            ))
-            ranges.append({
-                'database': database,
-                'v4': {point: query_v4(database, point) for point in measurement_points},
-                'v6': {point: query_v6(database, point) for point in measurement_points},
-                'total': self.object.measurements.count(),
-            })
-            counts.append({
-                'database': database,
-                'all': self.object.measurements.filter(database=database).count(),
-                'complete': self.object.measurements.filter(database=database).exclude(ipv4_location=None).exclude(ipv6_location=None).count(),
-                'incomplete': self.object.measurements.filter(database=database).filter(Q(ipv4_location=None) | Q(ipv6_location=None)).count(),
-                'only_v6': self.object.measurements.filter(database=database).exclude(ipv6_location=None).filter(ipv4_location=None).count(),
-                'only_v4': self.object.measurements.filter(database=database).exclude(ipv4_location=None).filter(ipv6_location=None).count(),
-            })
-
-        return {
-            'averages': averages,
-            'ranges': ranges,
-            'counts': counts,
-        }
 
 
 class MeasurementDetailView(HashidsSingleObjectMixin, DetailView):
