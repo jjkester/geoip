@@ -65,7 +65,7 @@ class DatasetChartView(HashidsSingleObjectMixin, DetailView):
         analysis = DataSetAnalysis(self.object)
         try:
             chart_method = '%s_chart' % self.kwargs['method']
-            content = getattr(analysis, chart_method)()
+            content = getattr(analysis, chart_method)(for_embed=False)
         except AttributeError:
             raise Http404("No chart named %s." % chart_method)
         return HttpResponse(
