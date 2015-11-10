@@ -8,7 +8,9 @@ Requires the database (in CSV format) to be locally available.
 import csv
 import ipaddress
 import os
+import socket
 import sqlite3
+
 from django.contrib.gis.geos import Point
 from django.utils.datetime_safe import datetime
 from geodb.interfaces import GeoIPInterface
@@ -44,16 +46,19 @@ class DBIP(GeoIPInterface):
     def _query(self, address: str) -> Point:
         cursor = self._conn.cursor()
         result = cursor.execute(
-            "SELECT latitude, longitude FROM location WHERE ip_start >= ? AND ip_end <= ?;",
-            (address, address)
+            "SELECT latitude, longitude FROM location WHERE ip_start >= ? LIMIT 1;",
+            (self._format_ip(address),)
         ).fetchone()
 
         if result:
-            return Point(
-                result[0],
-                result[1],
-                srid=4326,
-            )
+            try:
+                return Point(
+                    result[0],
+                    result[1],
+                    srid=4326,
+                )
+            except TypeError:
+                return None
         return None
 
     def _get_conn(self):
@@ -68,8 +73,8 @@ class DBIP(GeoIPInterface):
 
             # Create table
             cursor.execute("CREATE TABLE location ("
-                           "ip_start TEXT PRIMARY KEY NOT NULL,"
-                           "ip_end TEXT NOT NULL,"
+                           "ip_start BINARY PRIMARY KEY NOT NULL,"
+                           "ip_end BINARY NOT NULL,"
                            "country TEXT NOT NULL,"
                            "stateprov TEXT NOT NULL,"
                            "city TEXT NOT NULL,"
@@ -77,20 +82,38 @@ class DBIP(GeoIPInterface):
                            "longitude REAL NOT NULL,"
                            "timezone_offset REAL NOT NULL,"
                            "timezone_name TEXT NOT NULL);")
-            cursor.execute("CREATE INDEX index_ip_start_ip_end ON location (ip_start, ip_end);")
             conn.commit()
 
             # Import csv
             with open(self._get_file('db-ip/dbip-location.csv'), 'r') as source:
                 reader = csv.reader(source, delimiter=',', quotechar='"')
-                cursor.executemany(
-                    "INSERT INTO location (ip_start, ip_end, country, stateprov, city, latitude, longitude,"
-                    "timezone_offset, timezone_name) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);",
-                    [(x + ([None] * (9 - len(x))))[:9] for x in reader]
-                )
+                for data in reader:
+                    cursor.execute(
+                        "INSERT INTO location (ip_start, ip_end, country, stateprov, city, latitude, longitude,"
+                        "timezone_offset, timezone_name) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);",
+                        (
+                            self._format_ip(data[0]),
+                            self._format_ip(data[1]),
+                            data[2],
+                            data[3],
+                            data[4],
+                            data[5],
+                            data[6],
+                            data[7],
+                            data[8],
+                        )
+                    )
                 conn.commit()
                 conn.close()
 
         return sqlite3.connect(path)
+
+    @staticmethod
+    def _format_ip(ip):
+        ip_obj = ipaddress.ip_address(ip)
+        if ip_obj.version == 4:
+            return socket.inet_aton(ip)
+        else:
+            return socket.inet_pton(socket.AF_INET6, ip)
 
 interface = DBIP
