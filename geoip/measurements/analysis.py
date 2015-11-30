@@ -85,6 +85,8 @@ class DataSetAnalysis(object):
                 ipv4=list(map(lambda point: query_v4(database, point), points)),
                 ipv6=list(map(lambda point: query_v6(database, point), points)),
                 total=self.object.measurements.filter(database=database).count(),
+                total_v4=self.object.measurements.exclude(ipv4_distance=None).filter(database=database).count(),
+                total_v6=self.object.measurements.exclude(ipv6_distance=None).filter(database=database).count(),
             ))
         return data
 
@@ -127,8 +129,8 @@ class DataSetAnalysis(object):
         for row in data:
             # chart.add('%s IPv4' % row['database'].name, row['ipv4'])
             # chart.add('%s IPv6' % row['database'].name, row['ipv6'])
-            chart.add('%s IPv4' % row['database'].name, list(zip(points, map(lambda x: (x / row['total']) * 100, row['ipv4']))))
-            chart.add('%s IPv6' % row['database'].name, list(zip(points, map(lambda x: (x / row['total']) * 100, row['ipv6']))))
+            chart.add('%s IPv4' % row['database'].name, list(zip(points, map(lambda x: (x / row['total_v4']) * 100, row['ipv4']))))
+            chart.add('%s IPv6' % row['database'].name, list(zip(points, map(lambda x: (x / row['total_v6']) * 100, row['ipv6']))))
 
         return chart.render(disable_xml_declaration=for_embed)
 
@@ -146,7 +148,7 @@ class DataSetAnalysis(object):
         for row in data:
             # chart.add('%s IPv4' % row['database'].name, row['ipv4'])
             # chart.add('%s IPv6' % row['database'].name, row['ipv6'])
-            chart.add('%s IPv4' % row['database'].name, list(zip(points, map(lambda x: (x / row['total']) * 100, row['ipv4']))))
-            chart.add('%s IPv6' % row['database'].name, list(zip(points, map(lambda x: (x / row['total']) * 100, row['ipv6']))))
+            chart.add('%s IPv4' % row['database'].name, list(zip(points, map(lambda x: (x / row['total_v4']) * 100, row['ipv4']))))
+            chart.add('%s IPv6' % row['database'].name, list(zip(points, map(lambda x: (x / row['total_v6']) * 100, row['ipv6']))))
 
         return chart.render(disable_xml_declaration=for_embed)
