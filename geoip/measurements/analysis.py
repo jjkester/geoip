@@ -132,16 +132,14 @@ class DataSetAnalysis(object):
 
         return chart.render(disable_xml_declaration=for_embed)
 
-    def database_accuracies_large_chart(self, for_embed=True):
+    def database_accuracies_worst_chart(self, for_embed=True):
         points = range(6000, 20001, 10)
 
         data = self.database_accuracies(points)
 
         chart_options = copy(self.chart_options)
         chart_options['print_values'] = False
-        chart_options['width'] = 1600
-        chart_options['height'] = 600
-        chart = pygal.XY(legend_at_bottom_columns=3, range=(85, 100), xrange=(6000, 20000), **chart_options)
+        chart = pygal.XY(legend_at_bottom_columns=2, range=(85, 100), xrange=(6000, 20000), **chart_options)
         chart.x_labels = map(lambda x: '%d km' % x, range(6000, 20001, 1000))
         chart.y_labels = map(lambda x: '%d%%' % x, range(85, 101, 1))
 
