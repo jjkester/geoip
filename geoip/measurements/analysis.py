@@ -160,11 +160,15 @@ class DataSetAnalysis(object):
 
         chart_options = copy(self.chart_options)
         chart_options['print_values'] = False
-        chart_options['width'] = 1600
-        chart_options['height'] = 600
+        chart_options['width'] = 1000
+        chart_options['height'] = 500
+        chart_options['show_x_guides'] = True
+        chart_options['legend_at_bottom'] = False
+        chart_options['x_title'] = _("Distance (km)")
+        chart_options['y_title'] = _("Coverage (%)")
         chart = pygal.XY(legend_at_bottom_columns=3, range=(0, 100), xrange=(0, 20000), **chart_options)
-        chart.x_labels = map(lambda x: '%d km' % x, range(0, 20001, 2000))
-        chart.y_labels = map(lambda x: '%d%%' % x, range(0, 101, 10))
+        chart.x_labels = map(str, range(0, 20001, 2000))
+        chart.y_labels = map(str, range(0, 101, 10))
 
         for row in data:
             # chart.add('%s IPv4' % row['database'].name, row['ipv4'])
