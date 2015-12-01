@@ -152,3 +152,24 @@ class DataSetAnalysis(object):
             chart.add('%s IPv6' % row['database'].name, list(zip(points, map(lambda x: (x / row['total_v6']) * 100, row['ipv6']))))
 
         return chart.render(disable_xml_declaration=for_embed)
+
+    def database_accuracies_full_chart(self, for_embed=True):
+        points = range(0, 20001, 50)
+
+        data = self.database_accuracies(points)
+
+        chart_options = copy(self.chart_options)
+        chart_options['print_values'] = False
+        chart_options['width'] = 1600
+        chart_options['height'] = 600
+        chart = pygal.XY(legend_at_bottom_columns=3, range=(0, 100), xrange=(0, 20000), **chart_options)
+        chart.x_labels = map(lambda x: '%d km' % x, range(0, 20001, 2000))
+        chart.y_labels = map(lambda x: '%d%%' % x, range(0, 101, 10))
+
+        for row in data:
+            # chart.add('%s IPv4' % row['database'].name, row['ipv4'])
+            # chart.add('%s IPv6' % row['database'].name, row['ipv6'])
+            chart.add('%s IPv4' % row['database'].name, list(zip(points, map(lambda x: (x / row['total_v4']) * 100, row['ipv4']))), show_dots=False)
+            chart.add('%s IPv6' % row['database'].name, list(zip(points, map(lambda x: (x / row['total_v6']) * 100, row['ipv6']))), show_dots=False)
+
+        return chart.render(disable_xml_declaration=for_embed)
