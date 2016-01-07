@@ -10,7 +10,7 @@ from django.views.generic import ListView, DetailView
 from geoip.contrib.views import HashidsSingleObjectMixin
 from geoip.measurements.analysis import DataSetAnalysis
 from geoip.measurements.models import Dataset, Measurement
-from geoip.measurements.tasks import dataset_as_csv, set_cache
+from geoip.measurements.tasks import dataset_as_csv, set_cache, dataset_accuracy_as_csv
 
 
 class DatasetListView(ListView):
@@ -89,12 +89,14 @@ class DatasetExportView(HashidsSingleObjectMixin, DetailView):
     queryset = Dataset.objects.public().completed()
     template_name_suffix = '_export'
     context_object_name = 'dataset'
+    task = dataset_as_csv
+    filename_suffix = ''
 
     def get(self, request, *args, **kwargs):
         self.object = self.get_object()
 
         cache_name = 'filesystem'
-        cache_key = 'dataset_%s_csv' % self.object.hashid
+        cache_key = 'dataset_%s%s_csv' % (self.object.hashid, self.filename_suffix)
 
         cache = caches[cache_name]
 
@@ -104,13 +106,21 @@ class DatasetExportView(HashidsSingleObjectMixin, DetailView):
             if content is None:
                 cache.set(cache_key, False, None)
                 prepare_csv_export = chain(
-                    dataset_as_csv.s(self.object.pk),
+                    self.task.s(self.object.pk),
                     set_cache.s(cache_name=cache_name, key=cache_key, timeout=86400)
                 )
                 prepare_csv_export()
             response = super(DatasetExportView, self).get(request, *args, **kwargs)
         else:
             response = HttpResponse(content, content_type='text/csv')
-            response['Content-Disposition'] = 'attachment; filename="%s.csv"' % self.object.hashid
+            response['Content-Disposition'] = 'attachment; filename="%s%s.csv"' % (self.object.hashid, self.filename_suffix)
 
         return response
+
+
+class DatasetAccuracyExportView(DatasetExportView):
+    """
+    Exports the accuracy results of a dataset as CSV file.
+    """
+    filename_suffix = '_accuracy'
+    task = dataset_accuracy_as_csv

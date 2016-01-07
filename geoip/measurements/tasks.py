@@ -11,6 +11,7 @@ from django.db import transaction
 from django.utils import timezone
 from geoip.databases.models import Database
 from geoip.databases.tasks import query_database
+from geoip.measurements.analysis import DataSetAnalysis
 from geoip.measurements.models import Dataset, Measurement
 from geoip.nodes.models import Node
 
@@ -118,6 +119,44 @@ def dataset_as_csv(dataset_id):
             measurement.ipv6_distance or '',
             measurement.mutual_distance or '',
         ))
+
+    output = io.StringIO()
+    writer = csv.writer(output)
+
+    for row in csv_data:
+        writer.writerow(row)
+
+    return output.getvalue()
+
+
+@task()
+def dataset_accuracy_as_csv(dataset_id, distance_step=5):
+    dataset = Dataset.objects.prefetch_related('measurements').get(pk=dataset_id)
+
+    points = range(0, 20001, distance_step)
+
+    analysis = DataSetAnalysis(dataset)
+    analysis_data = analysis.database_accuracies(points)
+
+    csv_data = []
+    csv_header_row = [""]
+
+    column_data = []
+
+    for analysis_row in analysis_data:
+        csv_header_row.append(analysis_row['database'].name + (" (IPv4)"))
+        csv_header_row.append(analysis_row['database'].name + (" (IPv6)"))
+
+        column_data.append(list(map(lambda x: (x / analysis_row['total_v4']) * 100, analysis_row['ipv4'])))
+        column_data.append(list(map(lambda x: (x / analysis_row['total_v6']) * 100, analysis_row['ipv6'])))
+
+    csv_data.append(csv_header_row)
+
+    for p in range(0, len(points)):
+        csv_row = [points[p]]
+        for col in column_data:
+            csv_row.append(col[p])
+        csv_data.append(csv_row)
 
     output = io.StringIO()
     writer = csv.writer(output)
