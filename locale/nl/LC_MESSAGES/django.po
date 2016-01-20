@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-20 20:15+0100\n"
-"PO-Revision-Date: 2016-01-20 20:42+0100\n"
+"POT-Creation-Date: 2016-01-20 20:19+0000\n"
+"PO-Revision-Date: 2016-01-20 21:21+0100\n"
+"Last-Translator: \n"
+"Language-Team: \n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"Last-Translator: \n"
-"Language-Team: \n"
 "X-Generator: Poedit 1.8.4\n"
 
 #: geoip/databases/admin.py:18 geoip/measurements/admin.py:21
@@ -191,7 +191,7 @@ msgstr ""
 #: geoip/databases/templates/databases/database_list.html:3
 #: geoip/databases/templates/databases/database_list.html:6
 msgid "Geolocation databases"
-msgstr "Geolocatie-databases"
+msgstr "Geolocatiedatabases"
 
 #: geoip/databases/templates/databases/database_list.html:7
 msgid "Approximate geographic locations for IP addresses"
@@ -227,7 +227,7 @@ msgid ""
 "The databases are either available for free or graciously provided by their "
 "author(s) for research purposes."
 msgstr ""
-"De metingen zijn uitgevoerd met een aantal geolocatie-databases. Deze "
+"De metingen zijn uitgevoerd met een aantal geolocatiedatabases. Deze "
 "databases zijn ofwel voor onderzoeksdoeleinden gratis beschikbaar ofwel "
 "gratis beschikbaar gesteld door de auteur(s)."
 
@@ -713,7 +713,7 @@ msgstr "Engels"
 msgid "Dutch"
 msgstr "Nederlands"
 
-#: templates/base.html:8
+#: templates/base.html:11
 msgid "Insight into IP geolocation database accuracy"
 msgstr "Inzicht in de nauwkeurigheid van IP geolocatiedatabases"
 
@@ -725,15 +725,19 @@ msgstr "Home"
 msgid "About"
 msgstr "Over GeoIP"
 
-#: templates/base.html:92
+#: templates/base.html:81
+msgid "Language"
+msgstr "Taal"
+
+#: templates/base.html:107
 msgid "Copyright &copy; 2015 Jan-Jelle Kester."
 msgstr "Copyright &copy; 2015 Jan-Jelle Kester."
 
-#: templates/base.html:94
+#: templates/base.html:109
 msgid "About GeoIP"
 msgstr "Over GeoIP"
 
-#: templates/base.html:95
+#: templates/base.html:110
 msgid "Legal information"
 msgstr "Juridische informatie"
 

@@ -16,11 +16,13 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
+from django.views.i18n import set_language
 
 from geoip.views import HomepageView, AboutView, LegalView
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^session/language/', set_language, name='set_language'),
 
     url(r'^databases/', include('geoip.databases.urls', namespace='databases')),
     url(r'^nodes/', include('geoip.nodes.urls', namespace='nodes')),

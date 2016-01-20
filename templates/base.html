@@ -1,4 +1,7 @@
 {% load i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+{% get_available_languages as LANGUAGES %}
+{% get_language_info_list for LANGUAGES as languages %}
 <!DOCTYPE html>
 <html>
 <head lang="en">
@@ -12,16 +15,13 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
   <style type="text/css">
     @media (min-width: 768px) {
-      .navbar .navbar-nav {
+      .navbar .navbar-nav.navbar-center {
         display: inline-block;
         float: none;
         vertical-align: top;
       }
       .navbar .navbar-collapse {
         display: block;
-        position: fixed;
-        left: 0;
-        right: 0;
         text-align: center;
       }
     }
@@ -42,7 +42,7 @@
       </a>
     </div>
     <div class="collapse navbar-collapse">
-      <ul class="nav navbar-nav">
+      <ul class="nav navbar-nav navbar-center">
         <li{% if request.resolver_match.namespaces|length_is:0 and request.resolver_match.url_name == 'home' %} class="active"{% endif %}>
           <a href="{% url 'home' %}">
             <i class="glyphicon glyphicon-home"></i>
@@ -74,6 +74,21 @@
           </a>
         </li>
       </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li style="text-align: center;">
+          <div class="btn-group">
+            <button type="button" class="btn btn-primary btn-sm navbar-btn dropdown-toggle" data-toggle="dropdown">
+              {% trans "Language" %}
+              <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+              {% for language in languages %}
+                <li{% if language.code == LANGUAGE_CODE %} class="active"{% endif %}><a href="#" data-setlanguage="{{ language.code }}">{{ language.name_local }}</a></li>
+              {% endfor %}
+            </ul>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </nav>
@@ -96,6 +111,31 @@
     </ul>
   </div>
 </footer>
+
+<form id="setlanguage" action="{% url 'set_language' %}" method="post" style="display: none;">{% csrf_token %}
+  <select name="language">
+    {% for language in languages %}
+      <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected="selected"{% endif %}>
+          {{ language.name_local }} ({{ language.code }})
+      </option>
+    {% endfor %}
+  </select>
+  <input type="submit" value="Go" />
+</form>
+
+<script>
+  $('[data-setlanguage]').click(function (event) {
+    event.preventDefault();
+
+    var form = $('form#setlanguage');
+    var language = $(this).data('setlanguage');
+
+    if (form.length) {
+      form.children('[name=language]').val(language);
+      form.submit();
+    }
+  });
+</script>
 
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
