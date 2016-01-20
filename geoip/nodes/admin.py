@@ -29,7 +29,7 @@ class NodeAdmin(OSMGeoAdmin):
     list_display_links = ('name', 'dns_name')
     list_filter = ('source', 'is_active')
     readonly_fields = ('last_updated', 'created')
-    search_fields = ('name', 'dns_name', 'location')
+    search_fields = ('name', 'dns_name', 'ipv4', 'ipv6')
 
 
 @admin.register(DataSource)
