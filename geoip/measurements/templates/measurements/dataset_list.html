@@ -27,46 +27,50 @@
       </h1>
     </header>
 
-    <table class="table well">
-      <tbody>
-        <tr>
-          <th class="col-sm-6 col-md-4 col-lg-3">{% trans "Number of data sets" %}</th>
-          <td>{{ datasets.count }}</td>
-        </tr>
-        <tr>
-          <th>{% trans "Number of measurement points" %}</th>
-          <td>{{ measurements.count }}</td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="table-responsive well">
+      <table class="table">
+        <tbody>
+          <tr>
+            <th class="col-sm-6 col-md-4 col-lg-3">{% trans "Number of data sets" %}</th>
+            <td>{{ datasets.count }}</td>
+          </tr>
+          <tr>
+            <th>{% trans "Number of measurement points" %}</th>
+            <td>{{ measurements.count }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th>&nbsp;</th>
-          <th>{% trans "Date" %}</th>
-          <th>{% trans "Databases" %}</th>
-          <th>{% trans "Nodes" %}</th>
-          <th class="text-right"></th>
-        </tr>
-      </thead>
-      <tbody>
-      {% for dataset in datasets %}
-        <tr>
-          <td>{{ dataset.hashid }}</td>
-          <td>
-            <small>{% trans "Start" %}:</small> {{ dataset.start|date:'Y-m-d H:i' }}<br>
-            <small>{% trans "End" %}:</small> {{ dataset.end|date:'Y-m-d H:i' }}
-          </td>
-          <td>{{ dataset.databases__count }}</td>
-          <td>{{ dataset.nodes__count }}</td>
-          <td class="text-right" style="vertical-align: middle;">
-            <a href="{% url 'measurements:dataset_detail' hashid=dataset.hashid %}" class="btn btn-default btn-sm">{% trans "Details" %}</a>
-          </td>
-        </tr>
-      {% endfor %}
-      </tbody>
-    </table>
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>&nbsp;</th>
+            <th>{% trans "Date" %}</th>
+            <th>{% trans "Databases" %}</th>
+            <th>{% trans "Nodes" %}</th>
+            <th class="text-right"></th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for dataset in datasets %}
+          <tr>
+            <td>{{ dataset.hashid }}</td>
+            <td>
+              <small>{% trans "Start" %}:</small> {{ dataset.start|date:'Y-m-d H:i' }}<br>
+              <small>{% trans "End" %}:</small> {{ dataset.end|date:'Y-m-d H:i' }}
+            </td>
+            <td>{{ dataset.databases__count }}</td>
+            <td>{{ dataset.nodes__count }}</td>
+            <td class="text-right" style="vertical-align: middle;">
+              <a href="{% url 'measurements:dataset_detail' hashid=dataset.hashid %}" class="btn btn-default btn-sm">{% trans "Details" %}</a>
+            </td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
 
     {% include 'elements/pagination.html' %}
   </section>

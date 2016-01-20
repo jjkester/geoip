@@ -59,28 +59,30 @@
     <h2>{% trans "Measurements" %}</h2>
 
     {% if datasets %}
-      <table class="table table-striped">
-        <thead>
-          <tr>
-            <th>&nbsp;</th>
-            <th>{% trans "Date" %}</th>
-            <th>{% trans "Measurement points" %}</th>
-            <th class="text-right"></th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for dataset in datasets %}
+      <div class="table-responsive">
+        <table class="table table-striped">
+          <thead>
             <tr>
-              <td>{{ dataset.hashid }}</td>
-              <td>{{ dataset.end|date:'Y-m-d H:i' }}</td>
-              <td>{{ dataset.measurements.count }}</td>
-              <td class="text-right">
-                <a href="{% url 'measurements:dataset_detail' hashid=dataset.hashid %}" class="btn btn-default btn-xs">{% trans "Details" %}</a>
-              </td>
+              <th>&nbsp;</th>
+              <th>{% trans "Date" %}</th>
+              <th>{% trans "Measurement points" %}</th>
+              <th class="text-right"></th>
             </tr>
-          {% endfor %}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {% for dataset in datasets %}
+              <tr>
+                <td>{{ dataset.hashid }}</td>
+                <td>{{ dataset.end|date:'Y-m-d H:i' }}</td>
+                <td>{{ dataset.measurements.count }}</td>
+                <td class="text-right">
+                  <a href="{% url 'measurements:dataset_detail' hashid=dataset.hashid %}" class="btn btn-default btn-xs">{% trans "Details" %}</a>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
     {% else %}
       <div class="alert alert-info">
         <h4><i class="glyphicon glyphicon-info-sign"></i> {% blocktrans %}This database has not yet participated in any measurements{% endblocktrans %}</h4>

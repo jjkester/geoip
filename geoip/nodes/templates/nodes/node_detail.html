@@ -69,30 +69,32 @@
     <h2>{% trans "Measurements" %}</h2>
 
     {% if measurements %}
-      <table class="table table-striped">
-        <thead>
-          <tr>
-            <th>&nbsp;</th>
-            <th>{% trans "Data set" %}</th>
-            <th>{% trans "Date" %}</th>
-            <th>{% trans "Database" %}</th>
-            <th class="text-right"></th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for measurement in measurements %}
+      <div class="table-responsive">
+        <table class="table table-striped">
+          <thead>
             <tr>
-              <td>{{ measurement.hashid }}</td>
-              <td>{{ measurement.dataset.hashid }}</td>
-              <td>{{ measurement.created|date:'Y-m-d H:i' }}</td>
-              <td>{{ measurement.database.name }}</td>
-              <td class="text-right">
-                <a href="{% url 'measurements:measurement_detail' hashid=measurement.hashid %}" class="btn btn-default btn-xs">{% trans "Details" %}</a>
-              </td>
+              <th>&nbsp;</th>
+              <th>{% trans "Data set" %}</th>
+              <th>{% trans "Date" %}</th>
+              <th>{% trans "Database" %}</th>
+              <th class="text-right"></th>
             </tr>
-          {% endfor %}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {% for measurement in measurements %}
+              <tr>
+                <td>{{ measurement.hashid }}</td>
+                <td>{{ measurement.dataset.hashid }}</td>
+                <td>{{ measurement.created|date:'Y-m-d H:i' }}</td>
+                <td>{{ measurement.database.name }}</td>
+                <td class="text-right">
+                  <a href="{% url 'measurements:measurement_detail' hashid=measurement.hashid %}" class="btn btn-default btn-xs">{% trans "Details" %}</a>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
     {% else %}
       <div class="alert alert-info">
         <h4><i class="glyphicon glyphicon-info-sign"></i> {% blocktrans %}This node has not yet participated in any measurements{% endblocktrans %}</h4>

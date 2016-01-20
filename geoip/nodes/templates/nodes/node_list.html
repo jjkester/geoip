@@ -22,46 +22,50 @@
       </h1>
     </header>
 
-    <table class="table well">
-      <tbody>
-        <tr>
-          <th class="col-sm-6 col-md-4 col-lg-3">{% trans "Total number of nodes" %}</th>
-          <td>{{ all_nodes.count }}</td>
-        </tr>
-        <tr>
-          <th>{% trans "Number of usable nodes" %}</th>
-          <td>{{ all_nodes.usable.count }}</td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="table-responsive well">
+      <table class="table">
+        <tbody>
+          <tr>
+            <th class="col-sm-6 col-md-4 col-lg-3">{% trans "Total number of nodes" %}</th>
+            <td>{{ all_nodes.count }}</td>
+          </tr>
+          <tr>
+            <th>{% trans "Number of usable nodes" %}</th>
+            <td>{{ all_nodes.usable.count }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th>&nbsp;</th>
-          <th>{% trans "IP addresses" %}</th>
-          <th>{% trans "Source" %}</th>
-          <th class="text-right"></th>
-        </tr>
-      </thead>
-      <tbody>
-      {% for node in nodes %}
-        <tr>
-          <td>{{ node.name }}</td>
-          <td>
-            <small>{% trans "IPv4" %}:</small> {{ node.ipv4|default:'&mdash;' }}<br>
-            <small>{% trans "IPv6" %}:</small> {{ node.ipv6|default:'&mdash;' }}
-          </td>
-          <td>
-            <a href="{{ node.source.url }}">{{ node.source.name }}</a>
-          </td>
-          <td class="text-right" style="vertical-align: middle;">
-            <a href="{% url 'nodes:node_detail' hashid=node.hashid %}" class="btn btn-default btn-sm">{% trans "Details" %}</a>
-          </td>
-        </tr>
-      {% endfor %}
-      </tbody>
-    </table>
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>&nbsp;</th>
+            <th>{% trans "IP addresses" %}</th>
+            <th>{% trans "Source" %}</th>
+            <th class="text-right"></th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for node in nodes %}
+          <tr>
+            <td>{{ node.name }}</td>
+            <td>
+              <small>{% trans "IPv4" %}:</small> {{ node.ipv4|default:'&mdash;' }}<br>
+              <small>{% trans "IPv6" %}:</small> {{ node.ipv6|default:'&mdash;' }}
+            </td>
+            <td>
+              <a href="{{ node.source.url }}">{{ node.source.name }}</a>
+            </td>
+            <td class="text-right" style="vertical-align: middle;">
+              <a href="{% url 'nodes:node_detail' hashid=node.hashid %}" class="btn btn-default btn-sm">{% trans "Details" %}</a>
+            </td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
 
     {% include 'elements/pagination.html' %}
   </section>
