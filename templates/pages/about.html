@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load i18n %}
+{% load staticfiles %}
 {% block page_title %}About{% endblock %}
 {% block content %}
   <div class="container">
@@ -17,10 +18,16 @@
         <p>{% blocktrans %}The research has been carried by Jan-Jelle Kester as bachelor thesis for his Computer Science degree at the University of Twente, The Netherlands.{% endblocktrans %}</p>
         <div class="well well-lg">
           <h2><em>Comparing the accuracy of IPv4 and IPv6 geolocation databases</em></h2>
-          <h3>Motivation</h3>
-          <p>IP geolocation databases contain information about the physical location of a computer system given its IP address. These databases are widely used for multiple purposes, ranging from location-aware advertising and web site analytics to intelligent routing and cyber crime research.</p>
-          <p>The IPv6 protocol specification<sup><a href="https://www.ietf.org/rfc/rfc2460.txt" target="_blank"><i class="glyphicon glyphicon-link"></i></a></sup> was published in 1998. Now the need for IPv6 is apparent due to the fact that all IPv4 address blocks have been allocated by IANA. Therefore the large scale deployment of this protocol to end users is finally taking off after 15 years. But this rollout is not without obstacles. For example, systems only supporting IPv4 cannot connect to IPv6-only systems, and vice versa. Inherently, IPv4 and IPv6 will co-exist on many devices.</p>
-          <p>Because of the slow rollout of IPv6 many internet services were primarily focused on IPv4, including geolocation databases. However, IPv6 usage is on the rise. As of summer 2015, more than 8% of all Google users uses IPv6, while this was around 1% two years earlier<sup><a href="http://www.google.com/intl/nl/ipv6/statistics.html" target="_blank"><i class="glyphicon glyphicon-link"></i></a></sup>. This number will only grow the upcoming years. These numbers emphasize the need for IPv6 geolocation.</p>
+          <h3>Abstract</h3>
+          <p>
+            IPv4 geolocation has been around for some time, but IPv6 geolocation is relatively new.
+            This raises the question as to how the accuracy of IPv6 geolocation compares to the accuracy of IPv4 geolocation.
+            Since IPv6 geolocation is a reasonably new topic, litte research has been done on its accuracy.
+            In this study the accuracy is measured using a ground truth consisting of very precise locations of known computer systems.
+            Different IP geolocation databases were queried and the resulting locations were compared to the known locations for the collected IP addresses.
+            It turns out that IPv6 geolocation is significantly less accurate than IPv4 geolocation.
+            However, IPv6 geolocation shows potential to become at least as accurate as its IPv4 counterpart.
+          </p>
           <h3>Research questions</h3>
           <p>The paper provides answers for the following research questions:</p>
           <ul>
@@ -29,13 +36,13 @@
             <li>What is the accuracy difference of geolocation databases between IPv4 and IPv6?</li>
           </ul>
         </div>
-        <a href="#" class="btn btn-default btn-block disabled">
+        <a href="{% static 'Comparing_the_accuracy_of_IPv4_and_IPv6_geolocation_databases.pdf' %}" class="btn btn-default btn-block">
           <i class="glyphicon glyphicon-paperclip"></i>
           {% blocktrans %}Download paper{% endblocktrans %}
         </a>
         <hr>
         <h2>{% blocktrans %}Contact information{% endblocktrans %}</h2>
-        <p>GeoIP is created by Jan-Jelle Kester, Computer Science student at the University of Twente, The Netherlands. Questions regarding GeoIP can be directed to <a href="mailto:j.j.kester@student.utwente.nl">j.j.kester@student.utwente.nl</a>.</p>
+        <p>GeoIP is created by Jan-Jelle Kester, Computer Science student at the University of Twente, The Netherlands. Questions regarding GeoIP or the research can be directed to <a href="mailto:j.j.kester@student.utwente.nl">j.j.kester@student.utwente.nl</a>.</p>
       </div>
     </div>
   </div>

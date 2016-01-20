@@ -203,6 +203,7 @@ INSTALLED_APPS = (
 
     'geodb',
 
+    'geoip.contrib',
     'geoip.databases',
     'geoip.nodes',
     'geoip.measurements',
