@@ -1,0 +1,843 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-20 20:15+0100\n"
+"PO-Revision-Date: 2016-01-20 20:42+0100\n"
+"Language: nl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"X-Generator: Poedit 1.8.4\n"
+
+#: geoip/databases/admin.py:18 geoip/measurements/admin.py:21
+#: geoip/measurements/admin.py:45 geoip/nodes/admin.py:23
+msgid "Advanced options"
+msgstr "Geavanceerde opties"
+
+#: geoip/databases/forms.py:13
+msgid "IP address"
+msgstr "IP-adres"
+
+#: geoip/databases/forms.py:15
+msgid "Please enter an IP address."
+msgstr "Vul a.u.b. een IP-adres in."
+
+#: geoip/databases/forms.py:16
+msgid "The entered IP address is not a valid IPv4 or IPv6 address."
+msgstr "Het ingevulde IP-adres is geen geldig IPv4- of IPv6-adres."
+
+#: geoip/databases/models.py:26
+msgid "code name"
+msgstr "codenaam"
+
+#: geoip/databases/models.py:27 geoip/nodes/models.py:28
+#: geoip/nodes/models.py:63
+msgid "name"
+msgstr "naam"
+
+#: geoip/databases/models.py:28
+msgid "version"
+msgstr "versie"
+
+#: geoip/databases/models.py:29
+msgid "website"
+msgstr "website"
+
+#: geoip/databases/models.py:30 geoip/measurements/models.py:34
+#: geoip/measurements/models.py:79 geoip/nodes/models.py:31
+msgid "notes"
+msgstr "notities"
+
+#: geoip/databases/models.py:31 geoip/nodes/models.py:37
+msgid "is active"
+msgstr "is actief"
+
+#: geoip/databases/models.py:42 geoip/measurements/models.py:78
+msgid "GeoIP database"
+msgstr "GeoIP database"
+
+#: geoip/databases/models.py:43
+msgid "GeoIP databases"
+msgstr "GeoIP databases"
+
+#: geoip/databases/templates/databases/database_detail.html:3
+#: geoip/databases/templates/databases/database_detail.html:24
+#: geoip/measurements/templates/measurements/measurement_detail.html:127
+#: geoip/nodes/templates/nodes/node_detail.html:79
+msgid "Database"
+msgstr "Database"
+
+#: geoip/databases/templates/databases/database_detail.html:8
+#: geoip/nodes/templates/nodes/node_list.html:8
+#: geoip/nodes/templates/nodes/node_map.html:8
+msgid "Back to overview"
+msgstr "Terug naar overzicht"
+
+#: geoip/databases/templates/databases/database_detail.html:11
+#: geoip/databases/templates/databases/database_query.html:4
+#: geoip/databases/templates/databases/database_query.html:15
+msgid "Query database"
+msgstr "Doorzoek database"
+
+#: geoip/databases/templates/databases/database_detail.html:15
+#: geoip/databases/templates/databases/database_list.html:17
+#: geoip/measurements/templates/measurements/dataset_detail.html:16
+#: geoip/measurements/templates/measurements/dataset_export.html:12
+#: geoip/measurements/templates/measurements/dataset_list.html:17
+#: geoip/measurements/templates/measurements/measurement_detail.html:63
+#: geoip/nodes/templates/nodes/index.html:23
+#: geoip/nodes/templates/nodes/node_detail.html:16
+#: geoip/nodes/templates/nodes/node_list.html:12
+#: geoip/nodes/templates/nodes/node_map.html:15
+msgid "Admin"
+msgstr "Admin"
+
+#: geoip/databases/templates/databases/database_detail.html:16
+#: geoip/measurements/templates/measurements/dataset_detail.html:17
+#: geoip/measurements/templates/measurements/dataset_export.html:13
+#: geoip/measurements/templates/measurements/measurement_detail.html:64
+#: geoip/nodes/templates/nodes/node_detail.html:17
+msgid "Edit"
+msgstr "Bewerk"
+
+#: geoip/databases/templates/databases/database_detail.html:16
+#: geoip/databases/templates/databases/database_detail.html:17
+#: geoip/databases/templates/databases/database_list.html:19
+msgid "database"
+msgstr "database"
+
+#: geoip/databases/templates/databases/database_detail.html:17
+#: geoip/measurements/templates/measurements/dataset_detail.html:18
+#: geoip/measurements/templates/measurements/dataset_export.html:14
+#: geoip/measurements/templates/measurements/measurement_detail.html:65
+#: geoip/nodes/templates/nodes/node_detail.html:18
+msgid "Delete"
+msgstr "Verwijder"
+
+#: geoip/databases/templates/databases/database_detail.html:31
+#: geoip/databases/templates/databases/database_detail.html:79
+#: geoip/measurements/templates/measurements/dataset_detail.html:32
+#: geoip/measurements/templates/measurements/dataset_list.html:67
+#: geoip/nodes/templates/nodes/node_detail.html:32
+#: geoip/nodes/templates/nodes/node_detail.html:91
+#: geoip/nodes/templates/nodes/node_list.html:62
+msgid "Details"
+msgstr "Details"
+
+#: geoip/databases/templates/databases/database_detail.html:33
+#: geoip/measurements/templates/measurements/dataset_detail.html:34
+#: geoip/nodes/templates/nodes/node_detail.html:34
+msgid "ID"
+msgstr "ID"
+
+#: geoip/databases/templates/databases/database_detail.html:38
+#: geoip/databases/templates/databases/database_list.html:41
+msgid "Version"
+msgstr "Versie"
+
+#: geoip/databases/templates/databases/database_detail.html:40
+msgid "Current version"
+msgstr "Huidige versie"
+
+#: geoip/databases/templates/databases/database_detail.html:45
+#: geoip/nodes/templates/nodes/node_detail.html:59
+#: geoip/nodes/templates/nodes/node_list.html:46
+msgid "Source"
+msgstr "Bron"
+
+#: geoip/databases/templates/databases/database_detail.html:54
+msgid "Notes"
+msgstr "Notities"
+
+#: geoip/databases/templates/databases/database_detail.html:59
+#: geoip/measurements/templates/measurements/dataset_list.html:5
+#: geoip/nodes/templates/nodes/node_detail.html:69 templates/base.html:67
+msgid "Measurements"
+msgstr "Metingen"
+
+#: geoip/databases/templates/databases/database_detail.html:67
+#: geoip/measurements/templates/measurements/dataset_list.html:50
+#: geoip/nodes/templates/nodes/node_detail.html:78
+msgid "Date"
+msgstr "Datum"
+
+#: geoip/databases/templates/databases/database_detail.html:68
+#: geoip/measurements/templates/measurements/dataset_detail.html:61
+msgid "Measurement points"
+msgstr "Meetpunten"
+
+#: geoip/databases/templates/databases/database_detail.html:88
+msgid "This database has not yet participated in any measurements"
+msgstr "Deze database is nog niet gebruikt in een meting"
+
+#: geoip/databases/templates/databases/database_detail.html:89
+msgid ""
+"This usually means that there has been no new measurement since the database "
+"was added. This database will be tested in the upcoming measurements."
+msgstr ""
+"Dit betekent meestal dat er nog geen meting heeft plaatsgevonden sinds de "
+"database toegevoegd is. Deze database zal in de volgende metingen getest "
+"worden."
+
+#: geoip/databases/templates/databases/database_list.html:3
+#: geoip/databases/templates/databases/database_list.html:6
+msgid "Geolocation databases"
+msgstr "Geolocatie-databases"
+
+#: geoip/databases/templates/databases/database_list.html:7
+msgid "Approximate geographic locations for IP addresses"
+msgstr "Bij benading juiste geografische locaties voor IP-adressen"
+
+#: geoip/databases/templates/databases/database_list.html:18
+#: geoip/measurements/templates/measurements/dataset_list.html:18
+#: geoip/nodes/templates/nodes/index.html:24
+#: geoip/nodes/templates/nodes/node_list.html:13
+#: geoip/nodes/templates/nodes/node_map.html:16
+msgid "All"
+msgstr "Alle"
+
+#: geoip/databases/templates/databases/database_list.html:18
+msgid "databases"
+msgstr "databases"
+
+#: geoip/databases/templates/databases/database_list.html:19
+#: geoip/measurements/templates/measurements/dataset_list.html:19
+#: geoip/nodes/templates/nodes/index.html:25
+#: geoip/nodes/templates/nodes/node_list.html:14
+#: geoip/nodes/templates/nodes/node_map.html:17
+msgid "Add"
+msgstr "Toevoegen"
+
+#: geoip/databases/templates/databases/database_list.html:26
+msgid "Tested databases"
+msgstr "Geteste databases"
+
+#: geoip/databases/templates/databases/database_list.html:29
+msgid ""
+"The measurements are carried out using a number of geolocation databases. "
+"The databases are either available for free or graciously provided by their "
+"author(s) for research purposes."
+msgstr ""
+"De metingen zijn uitgevoerd met een aantal geolocatie-databases. Deze "
+"databases zijn ofwel voor onderzoeksdoeleinden gratis beschikbaar ofwel "
+"gratis beschikbaar gesteld door de auteur(s)."
+
+#: geoip/databases/templates/databases/database_list.html:33
+msgid "Currently available"
+msgstr "Momenteel beschikbaar"
+
+#: geoip/databases/templates/databases/database_list.html:34
+msgid "The following databases are currently used in tests:"
+msgstr "De volgende databases worden momenteel gebruikt in metingen:"
+
+#: geoip/databases/templates/databases/database_list.html:44
+msgid "Details &amp; test results"
+msgstr "Details &amp; testresultaten"
+
+#: geoip/databases/templates/databases/database_list.html:52
+msgid "No databases available"
+msgstr "Geen databases beschikbaar"
+
+#: geoip/databases/templates/databases/database_list.html:53
+msgid "At this moment there are no databases available for testing."
+msgstr "Op dit moment zijn er geen databases beschikbaar voor metingen."
+
+#: geoip/databases/templates/databases/database_query.html:4
+msgid "with"
+msgstr "met"
+
+#: geoip/databases/templates/databases/database_query.html:9
+msgid "Back to database"
+msgstr "Terug naar database"
+
+#: geoip/databases/templates/databases/database_query.html:32
+#: geoip/nodes/templates/nodes/node_detail.html:41
+msgid "Location"
+msgstr "Locatie"
+
+#: geoip/measurements/admin.py:41
+msgid "Measurement data"
+msgstr "Meetgegevens"
+
+#: geoip/measurements/admin_actions.py:19
+msgid "Run measurements for selected datasets"
+msgstr "Voer metingen uit voor geselecteerde datasets"
+
+#: geoip/measurements/analysis.py:99
+msgid "Average IPv4 deviation"
+msgstr "Gemiddelde afwijking IPv4"
+
+#: geoip/measurements/analysis.py:100
+msgid "Average IPv6 deviation"
+msgstr "Gemiddelde afwijking IPv6"
+
+#: geoip/measurements/analysis.py:101
+msgid "Average mutual deviation"
+msgstr "Gemiddelde onderlinge afwijking"
+
+#: geoip/measurements/analysis.py:112
+msgid "Only IPv4"
+msgstr "Alleen IPv4"
+
+#: geoip/measurements/analysis.py:113
+msgid "Only IPv6"
+msgstr "Alleen IPv6"
+
+#: geoip/measurements/analysis.py:114
+msgid "None"
+msgstr "Geen"
+
+#: geoip/measurements/analysis.py:167
+msgid "Distance (km)"
+msgstr "Afstand (km)"
+
+#: geoip/measurements/analysis.py:168
+msgid "Coverage (%)"
+msgstr "Dekking (%)"
+
+#: geoip/measurements/models.py:27
+msgid "queued"
+msgstr "in wachtrij"
+
+#: geoip/measurements/models.py:28
+msgid "running"
+msgstr "bezig"
+
+#: geoip/measurements/models.py:29
+msgid "success"
+msgstr "succesvol"
+
+#: geoip/measurements/models.py:30
+msgid "error"
+msgstr "fout"
+
+#: geoip/measurements/models.py:32
+msgid "start time"
+msgstr "starttijd"
+
+#: geoip/measurements/models.py:33
+msgid "end time"
+msgstr "eindtijd"
+
+#: geoip/measurements/models.py:35
+msgid "status"
+msgstr "status"
+
+#: geoip/measurements/models.py:36 geoip/measurements/models.py:85
+#: geoip/nodes/models.py:35
+msgid "created"
+msgstr "gemaakt"
+
+#: geoip/measurements/models.py:37
+msgid "is public"
+msgstr "is publiek"
+
+#: geoip/measurements/models.py:47 geoip/measurements/models.py:76
+#: geoip/measurements/templates/measurements/dataset_detail.html:17
+#: geoip/measurements/templates/measurements/dataset_detail.html:18
+#: geoip/measurements/templates/measurements/dataset_export.html:13
+#: geoip/measurements/templates/measurements/dataset_export.html:14
+#: geoip/measurements/templates/measurements/dataset_list.html:19
+#: geoip/measurements/templates/measurements/measurement_detail.html:55
+msgid "data set"
+msgstr "dataset"
+
+#: geoip/measurements/models.py:48
+#: geoip/measurements/templates/measurements/dataset_list.html:18
+msgid "data sets"
+msgstr "datasets"
+
+#: geoip/measurements/models.py:74 geoip/nodes/models.py:48
+#: geoip/nodes/templates/nodes/node_detail.html:17
+#: geoip/nodes/templates/nodes/node_detail.html:18
+#: geoip/nodes/templates/nodes/node_list.html:14
+#: geoip/nodes/templates/nodes/node_map.html:17
+msgid "node"
+msgstr "node"
+
+#: geoip/measurements/models.py:80
+#: geoip/measurements/templates/measurements/measurement_detail.html:134
+msgid "IPv4 location"
+msgstr "IPv4-locatie"
+
+#: geoip/measurements/models.py:81
+#: geoip/measurements/templates/measurements/measurement_detail.html:149
+msgid "IPv6 location"
+msgstr "IPv6-locatie"
+
+#: geoip/measurements/models.py:82
+msgid "IPv4 distance"
+msgstr "IPv4 afstand"
+
+#: geoip/measurements/models.py:83
+msgid "IPv6 distance"
+msgstr "IPv6 afstand"
+
+#: geoip/measurements/models.py:84
+msgid "mutual distance"
+msgstr "onderlinge afstand"
+
+#: geoip/measurements/models.py:97
+#: geoip/measurements/templates/measurements/measurement_detail.html:64
+#: geoip/measurements/templates/measurements/measurement_detail.html:65
+msgid "measurement"
+msgstr "meting"
+
+#: geoip/measurements/models.py:98
+msgid "measurements"
+msgstr "metingen"
+
+#: geoip/measurements/templates/measurements/dataset_detail.html:3
+#: geoip/measurements/templates/measurements/dataset_export.html:3
+#, python-format
+msgid "Data set %(dataset)s"
+msgstr "Dataset %(dataset)s"
+
+#: geoip/measurements/templates/measurements/dataset_detail.html:9
+#: geoip/nodes/templates/nodes/node_detail.html:12
+msgid "Back to list"
+msgstr "Terug naar lijst"
+
+#: geoip/measurements/templates/measurements/dataset_detail.html:12
+msgid "Export CSV"
+msgstr "Exporteer CSV"
+
+#: geoip/measurements/templates/measurements/dataset_detail.html:25
+#: geoip/measurements/templates/measurements/dataset_export.html:21
+#: geoip/nodes/templates/nodes/node_detail.html:77
+msgid "Data set"
+msgstr "Dataset"
+
+#: geoip/measurements/templates/measurements/dataset_detail.html:36
+msgid "Status"
+msgstr "Status"
+
+#: geoip/measurements/templates/measurements/dataset_detail.html:41
+msgid "Point in time"
+msgstr "Moment in tijd"
+
+#: geoip/measurements/templates/measurements/dataset_detail.html:43
+#: geoip/measurements/templates/measurements/dataset_list.html:61
+msgid "Start"
+msgstr "Start"
+
+#: geoip/measurements/templates/measurements/dataset_detail.html:45
+#: geoip/measurements/templates/measurements/dataset_list.html:62
+msgid "End"
+msgstr "Eind"
+
+#: geoip/measurements/templates/measurements/dataset_detail.html:50
+msgid "Size"
+msgstr "Omvang"
+
+#: geoip/measurements/templates/measurements/dataset_detail.html:52
+#: geoip/measurements/templates/measurements/dataset_list.html:51
+#: templates/base.html:55
+msgid "Databases"
+msgstr "Databases"
+
+#: geoip/measurements/templates/measurements/dataset_detail.html:54
+#: geoip/measurements/templates/measurements/dataset_list.html:52
+#: geoip/nodes/templates/nodes/index.html:31 templates/base.html:61
+msgid "Nodes"
+msgstr "Nodes"
+
+#: geoip/measurements/templates/measurements/dataset_detail.html:63
+msgid "Run time"
+msgstr "Uitvoertijd"
+
+#: geoip/measurements/templates/measurements/dataset_detail.html:77
+msgid "Average IPv4 accuracy"
+msgstr "Gemiddelde nauwkeurigheid IPv4"
+
+#: geoip/measurements/templates/measurements/dataset_detail.html:85
+msgid "Average IPv6 accuracy"
+msgstr "Gemiddelde nauwkeurigheid IPv6"
+
+#: geoip/measurements/templates/measurements/dataset_detail.html:93
+msgid "Average difference"
+msgstr "Gemmideld verschil"
+
+#: geoip/measurements/templates/measurements/dataset_export.html:8
+msgid "Back to data set"
+msgstr "Terug naar dataset"
+
+#: geoip/measurements/templates/measurements/dataset_export.html:27
+msgid "Your download is being prepared."
+msgstr "Uw download wordt klaargemaakt."
+
+#: geoip/measurements/templates/measurements/dataset_list.html:6
+msgid "IP geolocation database performance in the real world"
+msgstr "IP geolocatiedatabaseprestaties in de echte wereld"
+
+#: geoip/measurements/templates/measurements/dataset_list.html:9
+#: geoip/measurements/templates/measurements/dataset_list.html:26
+msgid "Measurement data sets"
+msgstr "Datasets van metingen"
+
+#: geoip/measurements/templates/measurements/dataset_list.html:34
+msgid "Number of data sets"
+msgstr "Aantal datasets"
+
+#: geoip/measurements/templates/measurements/dataset_list.html:38
+msgid "Number of measurement points"
+msgstr "Aantal meetpunten"
+
+#: geoip/measurements/templates/measurements/measurement_detail.html:3
+#, python-format
+msgid "Measurement %(measurement)s"
+msgstr "Meting %(measurement)s"
+
+#: geoip/measurements/templates/measurements/measurement_detail.html:8
+#: geoip/measurements/templates/measurements/measurement_detail.html:116
+msgid "Node location"
+msgstr "Node-locatie"
+
+#: geoip/measurements/templates/measurements/measurement_detail.html:9
+msgid "Database location"
+msgstr "Databaselocatie"
+
+#: geoip/measurements/templates/measurements/measurement_detail.html:55
+msgid "Back to"
+msgstr "Terug naar"
+
+#: geoip/measurements/templates/measurements/measurement_detail.html:58
+msgid "Node details"
+msgstr "Node-details"
+
+#: geoip/measurements/templates/measurements/measurement_detail.html:59
+msgid "Database details"
+msgstr "Databasedetails"
+
+#: geoip/measurements/templates/measurements/measurement_detail.html:72
+msgid "Measurement"
+msgstr "Meting"
+
+#: geoip/measurements/templates/measurements/measurement_detail.html:85
+msgid "IPv4 accuracy"
+msgstr "IPv4 nauwkeurigheid"
+
+#: geoip/measurements/templates/measurements/measurement_detail.html:93
+msgid "IPv6 accuracy"
+msgstr "IPv6 nauwkeurigheid"
+
+#: geoip/measurements/templates/measurements/measurement_detail.html:101
+msgid "IPv4 - IPv6 difference"
+msgstr "IPv4 - IPv6 verschil"
+
+#: geoip/measurements/templates/measurements/measurement_detail.html:109
+#: geoip/nodes/templates/nodes/node_detail.html:25
+msgid "Node"
+msgstr "Node"
+
+#: geoip/nodes/admin.py:19
+msgid "Measurement options"
+msgstr "Metingopties"
+
+#: geoip/nodes/models.py:29
+msgid "domain name"
+msgstr "domeinnaam"
+
+#: geoip/nodes/models.py:30 geoip/nodes/models.py:68
+#: geoip/nodes/templates/nodes/index.html:25
+msgid "source"
+msgstr "bron"
+
+#: geoip/nodes/models.py:32
+msgid "known location"
+msgstr "bekende locatie"
+
+#: geoip/nodes/models.py:33 geoip/nodes/templates/nodes/node_detail.html:52
+msgid "IPv4 address"
+msgstr "IPv4-adres"
+
+#: geoip/nodes/models.py:34 geoip/nodes/templates/nodes/node_detail.html:54
+msgid "IPv6 address"
+msgstr "IPv6-adres"
+
+#: geoip/nodes/models.py:36
+msgid "last updated"
+msgstr "laatst bijgewerkt"
+
+#: geoip/nodes/models.py:49 geoip/nodes/templates/nodes/index.html:49
+#: geoip/nodes/templates/nodes/node_list.html:13
+#: geoip/nodes/templates/nodes/node_map.html:16
+msgid "nodes"
+msgstr "nodes"
+
+#: geoip/nodes/models.py:64
+msgid "URL"
+msgstr "URL"
+
+#: geoip/nodes/models.py:69 geoip/nodes/templates/nodes/index.html:24
+msgid "sources"
+msgstr "bronnen"
+
+#: geoip/nodes/templates/nodes/index.html:3
+#: geoip/nodes/templates/nodes/index.html:7
+msgid "Ground truth nodes"
+msgstr "Vergelijkingsnodes"
+
+#: geoip/nodes/templates/nodes/index.html:9
+msgid "A solid set of information to compare database query results against"
+msgstr "Gedegen informatie om database opzoekresultaten mee te vergelijken"
+
+#: geoip/nodes/templates/nodes/index.html:16
+#: geoip/nodes/templates/nodes/node_map.html:11
+msgid "Browse all nodes"
+msgstr "Blader door alle nodes"
+
+#: geoip/nodes/templates/nodes/index.html:19
+#: geoip/nodes/templates/nodes/node_map.html:3
+#: geoip/nodes/templates/nodes/node_map.html:24
+msgid "Global coverage"
+msgstr "Wereldwijde dekking"
+
+#: geoip/nodes/templates/nodes/index.html:34
+msgid ""
+"The measurements performed by this application require a set of test nodes. "
+"A node is a physical computer system with a public IP address (either IPv4, "
+"IPv6 or both) and a known physical location. This location is used as a "
+"ground truth when looking up the node's IP address in IP geolocation "
+"databases. This way it is possible to calculate the accuracy of a database "
+"for a given node."
+msgstr ""
+"De metingen die door dit programma zijn uitgevoerd vereisen een groep "
+"'nodes' voor vergelijking. Een node is een fysiek computersysteem met een "
+"publiek IP-adres (IPv4, IPv6 of beide) en een bekende fysieke locatie. Deze "
+"locatie wordt gebruikt als beginwaarheid wanneer het IP-adres van een node "
+"in een IP geolocatiedatabase wordt opgezocht. Op deze manier kan de "
+"nauwkeurigheid van een database voor een bepaalde node bepaald worden."
+
+#: geoip/nodes/templates/nodes/index.html:35
+msgid ""
+"The measurements do not require access to the node, only the information "
+"about the node is sufficient. However, the information has to be accurate "
+"for the research method to work."
+msgstr ""
+"De metingen vereisen geen toegang tot de node, alleen informatie over een "
+"node is voldoende. De informatie moet wel juist zijn om goede resultaten te "
+"behalen."
+
+#: geoip/nodes/templates/nodes/index.html:39
+msgid "Sources"
+msgstr "Bronnen"
+
+#: geoip/nodes/templates/nodes/index.html:40
+msgid ""
+"The test node data is a compilation of data from a number of trustworthy "
+"sources which can be found below."
+msgstr ""
+"De gegevens van de nodes zijn samengesteld uit diverse betrouwbare bronnen, "
+"welke hieronder te vinden zijn."
+
+#: geoip/nodes/templates/nodes/index.html:56
+msgid ""
+"Do you think you have an interesting set of nodes to use as ground truth? "
+"Please get in touch to discuss the possibilities."
+msgstr ""
+"Bent u van mening dat u een interessante groep nodes kan aanbieden? Laat het "
+"ons weten, we bespreken graag de mogelijkheden."
+
+#: geoip/nodes/templates/nodes/node_detail.html:3
+#, python-format
+msgid "Node %(node)s"
+msgstr "Node %(node)s"
+
+#: geoip/nodes/templates/nodes/node_detail.html:36
+msgid "Domain name"
+msgstr "Domeinnaam"
+
+#: geoip/nodes/templates/nodes/node_detail.html:43
+msgid "Latitude"
+msgstr "Latitude"
+
+#: geoip/nodes/templates/nodes/node_detail.html:45
+msgid "Longitude"
+msgstr "Longitude"
+
+#: geoip/nodes/templates/nodes/node_detail.html:50
+#: geoip/nodes/templates/nodes/node_list.html:45
+msgid "IP addresses"
+msgstr "IP-adressen"
+
+#: geoip/nodes/templates/nodes/node_detail.html:100
+msgid "This node has not yet participated in any measurements"
+msgstr "Deze node is nog niet gebruikt voor een meting."
+
+#: geoip/nodes/templates/nodes/node_detail.html:101
+msgid ""
+"This usually means that there has been no new measurement since the node was "
+"added. The IP addresses of the node will be tested in the upcoming "
+"measurements."
+msgstr ""
+"Dit betekent over het algemeen dat er nog geen nieuwe metingen zijn geweest "
+"sinds deze node is toegevoegd. De IP-adressen van de node zullen getest "
+"worden in de aankomende metingen."
+
+#: geoip/nodes/templates/nodes/node_list.html:3
+#: geoip/nodes/templates/nodes/node_list.html:21
+msgid "List of nodes"
+msgstr "Lijst van nodes"
+
+#: geoip/nodes/templates/nodes/node_list.html:29
+msgid "Total number of nodes"
+msgstr "Totaal aantal nodes"
+
+#: geoip/nodes/templates/nodes/node_list.html:33
+msgid "Number of usable nodes"
+msgstr "Aantal bruikbare nodes"
+
+#: geoip/nodes/templates/nodes/node_list.html:55
+msgid "IPv4"
+msgstr "IPv4"
+
+#: geoip/nodes/templates/nodes/node_list.html:56
+msgid "IPv6"
+msgstr "IPv6"
+
+#: geoip/settings.py:120
+msgid "English"
+msgstr "Engels"
+
+#: geoip/settings.py:121
+msgid "Dutch"
+msgstr "Nederlands"
+
+#: templates/base.html:8
+msgid "Insight into IP geolocation database accuracy"
+msgstr "Inzicht in de nauwkeurigheid van IP geolocatiedatabases"
+
+#: templates/base.html:49
+msgid "Home"
+msgstr "Home"
+
+#: templates/base.html:73 templates/pages/about.html:10
+msgid "About"
+msgstr "Over GeoIP"
+
+#: templates/base.html:92
+msgid "Copyright &copy; 2015 Jan-Jelle Kester."
+msgstr "Copyright &copy; 2015 Jan-Jelle Kester."
+
+#: templates/base.html:94
+msgid "About GeoIP"
+msgstr "Over GeoIP"
+
+#: templates/base.html:95
+msgid "Legal information"
+msgstr "Juridische informatie"
+
+#: templates/pages/about.html:12
+msgid "GeoIP was created by"
+msgstr "GeoIP is gemaakt door"
+
+#: templates/pages/about.html:12
+msgid ""
+"as a piece of software to automate parts of his research into IP geolocation."
+msgstr ""
+"als een softwareproduct voor het automatiseren van zijn onderzoek over IP "
+"geolocatie."
+
+#: templates/pages/about.html:12
+msgid ""
+"Since creating a web application was the fastest way to go, it would not "
+"take a lot of effort to expose the results to the public on a web site with "
+"the platform as a back end. The platform allows for repeated measurements, "
+"so the data collection and analysis can continue while the original research "
+"is completed. The research paper can be found below."
+msgstr ""
+"Omdat het maken van een webapplicatie de makkelijkste optie was kostte het "
+"niet veel moeite om de resultaten van het onderzoek publiek beschikbaar te "
+"maken. Het platform biedt de mogelijkheid voor herhaalde metingen zodat het "
+"verkrijgen en analyseren van data door kan gaan nadat het oorspronkelijke "
+"onderzoek voltooid is. Het paper is hieronder te vinden."
+
+#: templates/pages/about.html:13
+msgid "Source code"
+msgstr "Broncode"
+
+#: templates/pages/about.html:14
+msgid "GeoIP's source code is available on GitHub:"
+msgstr "De broncode van GeoIP is beschikbaar op GitHub:"
+
+#: templates/pages/about.html:17
+msgid "Research paper"
+msgstr "Onderzoekspaper"
+
+#: templates/pages/about.html:18
+msgid ""
+"The research has been carried by Jan-Jelle Kester as bachelor thesis for his "
+"Computer Science degree at the University of Twente, The Netherlands."
+msgstr ""
+"Dit onderzoek is uitgevoerd door Jan-Jelle Kester als bacheloropdracht voor "
+"zijn Technische Informaticaopleiding op de Universiteit Twente."
+
+#: templates/pages/about.html:41
+msgid "Download paper"
+msgstr "Download paper"
+
+#: templates/pages/about.html:44
+msgid "Contact information"
+msgstr "Contactinformatie"
+
+#: templates/pages/index.html:5
+msgid "Insight into"
+msgstr "Inzicht in"
+
+#: templates/pages/index.html:5
+msgid "IP geolocation database accuracy"
+msgstr "IP geolocatiedatabase nauwkeurigheid"
+
+#: templates/pages/index.html:7
+msgid ""
+"Measuring IP geolocation database accuracy using real-world testing data "
+"from accredited sources"
+msgstr ""
+"IP geolocatiedatabase nauwkeurigheid meten met gebruik van praktijkgegevens "
+"uit betrouwbare bronnen"
+
+#: templates/pages/index.html:18
+msgid "Test nodes"
+msgstr "Testnodes"
+
+#: templates/pages/index.html:26
+msgid "Historical measurements"
+msgstr "Historische metingen"
+
+#: templates/pages/index.html:32
+msgid "ago"
+msgstr "geleden"
+
+#: templates/pages/index.html:34
+msgid "Last measurement"
+msgstr "Laatste meting"
+
+#: templates/pages/index.html:43
+msgid "Created for scientific research"
+msgstr "Gebouwd voor wetenschappelijk onderzoek"
+
+#: templates/pages/index.html:44
+msgid ""
+"This platform was originally created as a platform for automating a research "
+"project."
+msgstr ""
+"Dit platform is oorspronkelijk gebouwd als platform voor het automatiseren "
+"van een onderzoeksproject."
+
+#: templates/pages/index.html:45
+msgid "Read more"
+msgstr "Lees meer"
+
+#: templates/pages/legal.html:9
+msgid "Legal"
+msgstr "Juridisch"

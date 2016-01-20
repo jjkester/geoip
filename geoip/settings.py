@@ -118,6 +118,7 @@ USE_TZ = True
 # Available languages
 LANGUAGES = (
     ('en', _("English")),
+    ('nl', _("Dutch")),
 )
 
 # Defaults
@@ -127,6 +128,9 @@ TIME_ZONE = 'UTC'
 # Cookie settings
 LANGUAGE_COOKIE_NAME = 'language'
 
+# Locale paths
+LOCALE_PATHS = [os.path.join(BASE_DIR, 'locale')]
+
 
 ########
 # HTTP #
@@ -135,6 +139,7 @@ LANGUAGE_COOKIE_NAME = 'language'
 # Middleware
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
