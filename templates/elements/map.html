@@ -1,7 +1,7 @@
 
 <script type="text/javascript">
   $(document).ready(function() {
-    $.getScript("http://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js", function(data, status, jqxhr) {
+    $.getScript("https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js", function(data, status, jqxhr) {
       var map = L.map("{{ id|default:'map'|escapejs }}").setView(center={% if point %}[{{ point.0 }}, {{ point.1 }}]{% else %}[33, 0]{% endif %}, zoom={{ zoom|default:11 }}, crs=L.CRS.EPSG4326);
 
       {% if not mutable %}
@@ -16,7 +16,7 @@
       {% endif %}
 
       // Add openstreetmap
-      L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 15,
         subdomains: ['a', 'b', 'c'],
         attribution: 'Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
