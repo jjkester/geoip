@@ -2,6 +2,7 @@
 Data models for the results of the measurements of the GeoIP application.
 """
 from django.contrib.gis.db import models
+from django.contrib.gis.db.models.functions import Distance
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 from hashids import Hashids
@@ -12,6 +13,7 @@ class DatasetQuerySet(models.QuerySet):
     """
     Custom query set for result sets.
     """
+
     def public(self):
         return self.filter(is_public=True)
 
@@ -23,6 +25,7 @@ class Dataset(models.Model):
     """
     Represents a single result set.
     """
+
     class Status(Choice):
         queued = (0, _("queued"))
         running = (1, _("running"))
@@ -108,14 +111,18 @@ class Measurement(models.Model):
         return self.hashids.encode(self.id)
 
     def calculate_distances(self):
-        queryset = Measurement.objects.filter(pk=self.pk)
-        ipv4_distance = queryset.distance(self.node.location, field_name='ipv4_location').get().distance
-        ipv6_distance = queryset.distance(self.node.location, field_name='ipv6_location').get().distance
+        queryset = Measurement.objects.filter(pk=self.pk).annotate(
+            _ipv4_distance=Distance('ipv4_location', self.node.location),
+            _ipv6_distance=Distance('ipv6_location', self.node.location),
+        )
+        instance = queryset.get()
 
-        if ipv4_distance:
-            self.ipv4_distance = ipv4_distance.km
-        if ipv6_distance:
-            self.ipv6_distance = ipv6_distance.km
-        if ipv4_distance and ipv6_distance:
-            self.mutual_distance = queryset.distance(self.ipv4_location, field_name='ipv6_location').get().distance.km
+        if instance._ipv4_distance:
+            self.ipv4_distance = instance._ipv4_distance.km
+        if instance._ipv6_distance:
+            self.ipv6_distance = instance._ipv6_distance.km
+        if instance._ipv4_distance and instance._ipv6_distance:
+            self.mutual_distance = queryset.annotate(
+                _mutual_distance=Distance('ipv6_location', instance.ipv4_location)
+            ).get()._mutual_distance.km
         return self
